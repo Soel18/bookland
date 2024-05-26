@@ -33,7 +33,8 @@ class User(AbstractUser):
 class Author(models.Model):
     name = models.CharField(max_length=100)
     bio = models.TextField()
-    # Otros campos como fecha de nacimiento, país, etc.
+    birth_date = models.DateField(null=True, blank=True)  # Fecha de nacimiento
+    country = models.CharField(max_length=100, null=True, blank=True)  # País
 
     def __str__(self):
         return self.name
