@@ -35,3 +35,9 @@ git commit -m "Agrege .gitignore"
 git push origin main
 
 #aqui agregaremos readme.md para poner esta info
+
+#para correr la app usamos esto
+python manage.py runserver
+
+#para apagarlo usamos 
+ctrl+c
