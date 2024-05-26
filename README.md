@@ -1,5 +1,15 @@
-#Esto es un codigo que va necesitar
-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
+# Guía de Inicio Rápido para Bookland
+
+Este repositorio contiene el código fuente para el proyecto Bookland, una aplicación web desarrollada con Django.
+
+## Configuración Inicial
+
+Para comenzar, sigue estos pasos:
+
+1. Clona este repositorio en tu máquina local:
+
+```bash
+git clone https://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@github.com/Soel18/bookland.git
 
 #con esto crea el proyecto de django
 django-admin startproject bookland
@@ -9,6 +19,7 @@ git init
 git commit -m "first commit"
 git branch -M main
 git remote add origin https://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@github.com/Soel18/bookland.git
+
 git push -u origin main
 
 #con esto crea el entorno virtual
