@@ -80,5 +80,8 @@ git push origin main
 python manage.py runserver
 #para apagarlo usamos ctrl+c
 ```
-
-
+## Ahora usamos esto para agregar instalar todo mas rápido 
+```bash
+pip freeze > requirements.txt
+#cuando tenga que trabajar en otra computadora que no sea esta esto solo se utilizara cuando se instale otra librería a su proyecto por ejemplo cuando instale algo parecido a django.
+```
