@@ -85,4 +85,4 @@ python manage.py runserver
 pip freeze > requirements.txt
 #cuando tenga que trabajar en otra computadora que no sea esta esto solo se utilizara cuando se instale otra librería a su proyecto por ejemplo cuando instale algo parecido a django.
 ```
-# digamos que hice un cambio
+# digamos que hice un cambio xdd
