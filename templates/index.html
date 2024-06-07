@@ -1,0 +1,46 @@
+<!-- templates/index.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buscar Libros</title>
+    <style>
+        .book-list {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .book-item {
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin: 10px;
+            width: 150px;
+            text-align: center;
+        }
+        .book-cover {
+            width: 128px;
+            height: 193px;
+        }
+    </style>
+</head>
+<body>
+    <form method="get" action="{% url 'index' %}">
+        <input type="text" name="q" placeholder="Buscar libros..." value="{{ request.GET.q }}">
+        <button type="submit">Buscar</button>
+    </form>
+
+    <div class="book-list">
+        {% if libros %}
+            {% for libro in libros %}
+                <div class="book-item">
+                    <img class="book-cover" src="{{ libro.cover_url }}" alt="{{ libro.title_suggest }}">
+                    <p><strong>{{ libro.title_suggest }}</strong></p>
+                    <p>por {{ libro.author_name|join:", " }}</p>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No se encontraron libros.</p>
+        {% endif %}
+    </div>
+</body>
+</html>

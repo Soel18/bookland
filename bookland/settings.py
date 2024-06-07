@@ -33,6 +33,9 @@ SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env('DEBUG')
+AUTH_USER_MODEL = 'app.CustomUser'
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+SESSION_ENGINE = "django.contrib.sessions.backends.db"
 ALLOWED_HOSTS = []
 
 
