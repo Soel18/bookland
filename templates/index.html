@@ -1,4 +1,3 @@
-<!-- templates/index.html -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -33,8 +32,10 @@
         {% if libros %}
             {% for libro in libros %}
                 <div class="book-item">
-                    <img class="book-cover" src="{{ libro.cover_url }}" alt="{{ libro.title_suggest }}">
-                    <p><strong>{{ libro.title_suggest }}</strong></p>
+                    <a href="{% url 'detalle_libro' libro.key|slice:'7:' %}">
+                        <img class="book-cover" src="{{ libro.cover_url }}" alt="{{ libro.title_suggest }}">
+                        <p><strong>{{ libro.title_suggest }}</strong></p>
+                    </a>
                     <p>por {{ libro.author_name|join:", " }}</p>
                 </div>
             {% endfor %}
