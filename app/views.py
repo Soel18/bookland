@@ -5,7 +5,7 @@ from django.contrib import messages
 from django.core.mail import send_mail
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
-from .forms import RegistrationForm
+from app.forms import RegistrationForm
 import requests
 
 #log in
@@ -16,11 +16,11 @@ def login_view(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect('home')
+            return redirect('index')
         else:
             messages.error(request, 'Nombre de usuario o contraseña incorrectos')
-            return render(request, 'login.html')
-    return render(request, 'login.html')
+            return render(request, 'login_register.html')
+    return render(request, 'login_register.html')
 
 #Signin up
 def register_view(request):
@@ -30,21 +30,18 @@ def register_view(request):
             user = form.save()
             login(request, user)            
             send_welcome_email(user.email, user.username)
-            return redirect('foto')
+            return redirect('index')
         else:
-            return render(request, 'register.html', {'form': form})         
+            return render(request, 'login_register.html', {'form': form})         
     else:
         form = RegistrationForm()
-    return render(request, 'register.html', {'form': form})
+    return render(request, 'login_register.html', {'form': form})
 
 #Logout
-@login_required(login_url='login')
+@login_required(login_url='login_register')
 def logout_view(request):
-    #if request.user.is_authenticated:
-    #    request.user.last_activity = timezone.now() - timedelta(minutes=0.10)
-    #    request.user.save()
     logout(request)
-    return redirect('login')
+    return redirect('login_register')
 
 #Send mail
 def send_welcome_email(email, username):

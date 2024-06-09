@@ -5,16 +5,10 @@ from .models import CustomUser
 class RegistrationForm(UserCreationForm):
     class Meta:
         model = CustomUser
-        fields = ['first_name', 'last_name', 'username', 'email', 'gender', 'location', 'password1', 'password2']
+        fields = ['username', 'email', 'gender', 'password1', 'password2']
         widgets = {
             'gender': forms.Select(choices=CustomUser.gender_choices),
         }
-
-    def clean_location(self):
-        location = self.cleaned_data.get('location')
-        if not location:
-            raise forms.ValidationError('La ubicación es requerida.')
-        return location
 
     def clean_password2(self):
         password1 = self.cleaned_data.get("password1")
