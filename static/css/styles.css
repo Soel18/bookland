@@ -18,7 +18,7 @@ main {
   min-height: 100vh;
   overflow: hidden;
   /*background-color: #223243;*/
-  background-image: url('../img/background.jpg');
+  background-image: url('../images/background.jpg');
   padding: 2rem;
   display: flex;
   align-items: center;

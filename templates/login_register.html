@@ -17,7 +17,7 @@
                     <form action="{% url 'login_view' %}" autocomplete="off" class="sign-in-form" method="post">
                         {% csrf_token %}                        
                         <div class="logo">
-                            <img src="{% static 'img/logo.png' %}" alt="easyclass" />
+                            <img src="{% static 'images/logo.png' %}" alt="easyclass" />
                             <h4>BookLand</h4>
                         </div>
 
@@ -50,7 +50,6 @@
                                 O accede por
                                 <a href="{% url 'social:begin' 'google-oauth2' %}">Google</a> para iniciar sesión
                             </p>
-                            <p></p>
                             <input type="submit" value="Ingresar" class="sign-btn" />
                             <p class="text">
                                 ¿Olvidó su contraseña o sus datos de inicio de sesión?
@@ -62,7 +61,7 @@
                     <form action="{% url 'register_view' %}" autocomplete="off" class="sign-up-form" method="post">
                         {% csrf_token %}
                         <div class="logo">
-                            <img src="{% static 'img/logo.png' %}" alt="easyclass" />
+                            <img src="{% static 'images/logo.png' %}" alt="easyclass" />
                             <h4>BookLand</h4>
                         </div>
 
@@ -126,6 +125,10 @@
                                 {% endfor %}
                                 {% endif %}			                                
                             </div>
+                            <p class="text">
+                                O accede por
+                                <a href="{% url 'social:begin' 'google-oauth2' %}">Google</a> para iniciar sesión
+                            </p>
                             <input type="submit" value="Registrarse" class="sign-btn" />
                         </div>
                     </form>
@@ -133,9 +136,9 @@
 
                 <div class="carousel">
                     <div class="images-wrapper">
-                        <img src="{% static 'img/image1.png' %}" class="image img-1 show" alt="" />
-                        <img src="{% static 'img/image2.png' %}" class="image img-2" alt="" />
-                        <img src="{% static 'img/image3.png' %}" class="image img-3" alt="" />
+                        <img src="{% static 'images/image1.png' %}" class="image img-1 show" alt="" />
+                        <img src="{% static 'images/image2.png' %}" class="image img-2" alt="" />
+                        <img src="{% static 'images/image3.png' %}" class="image img-3" alt="" />
                     </div>
 
                     <div class="text-slider">
