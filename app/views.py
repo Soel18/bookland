@@ -41,7 +41,7 @@ def register_view(request):
 @login_required(login_url='login_register')
 def logout_view(request):
     logout(request)
-    return redirect('login_register')
+    return redirect('login_view')
 
 #Send mail
 def send_welcome_email(email, username):

@@ -46,8 +46,12 @@
                                 {% endfor %}              
                             </div>
                             {% endif %}	
+                            <p class="text">
+                                O accede por
+                                <a href="{% url 'social:begin' 'google-oauth2' %}">Google</a> para iniciar sesión
+                            </p>
+                            <p></p>
                             <input type="submit" value="Ingresar" class="sign-btn" />
-
                             <p class="text">
                                 ¿Olvidó su contraseña o sus datos de inicio de sesión?
                                 <a href="#">Cambiar Contraseña</a> para iniciar sesión
