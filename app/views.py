@@ -38,10 +38,10 @@ def register_view(request):
     return render(request, 'login_register.html', {'form': form})
 
 #Logout
-@login_required(login_url='login_register')
+@login_required(login_url='login')
 def logout_view(request):
     logout(request)
-    return redirect('login_view')
+    return redirect('login')
 
 #Send mail
 def send_welcome_email(email, username):
@@ -51,7 +51,44 @@ def send_welcome_email(email, username):
     recipient_list = [email]
     send_mail(subject, message, from_email, recipient_list)
 
+
+#Vista de perfiles de usuarios
+@login_required(login_url='login')
+def foto_view(request):
+    user = request.user
+
+    context = {
+        'first_name': user.first_name,
+        'last_name': user.last_name,
+        'username': user.username,
+        'password': '********',
+        'email': user.email,
+    } 
+    return render(request, 'foto.html', context)
+
+#Acualizar usuario
+@login_required(login_url='login')
+def user_profile(request):
+    user = request.user
+    if request.method == 'POST':
+        form = UserProfileForm(request.POST, request.FILES, instance=user)
+        if form.is_valid():
+            form.save()
+            print('Perfil actualizado correctamente.')
+            return redirect('foto')
+        else:
+            print('Error al actualizar el perfil. Por favor, corrija los errores.')
+    else:
+        form = UserProfileForm(instance=user)
+
+    context = {
+        'form': form,
+        'user': user,
+    }
+    return render(request, 'foto.html', context)
+
 #Home
+@login_required(login_url='login')
 def index(request):
     query = request.GET.get('q', '')
     libros = []
@@ -69,6 +106,7 @@ def index(request):
     return render(request, 'index.html', {'libros': libros})
 
 # Vista para detalles de un libro
+@login_required(login_url='login')
 def detalle_libro(request, olid):
     response = requests.get(f'https://openlibrary.org/works/{olid}.json')
     response.raise_for_status()

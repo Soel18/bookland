@@ -160,10 +160,21 @@ AUTHENTICATION_BACKENDS  = [
     'django.contrib.auth.backends.ModelBackend',
 ]
 
+
 LOGIN_URL = 'login_register'
 LOGIN_REDIRECT_URL = 'index'
-LOGOUT_URL = 'logout_view'
+LOGOUT_URL = 'logout'
 LOGOUT_REDIRECT_URL = 'login_register'
 
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = env('ID_CLIENT')
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = env('GOOGLE_SECRET_KEY')
+from social_core.exceptions import AuthAlreadyAssociated
+
+def social_user(strategy, details, backend, user=None, *args, **kwargs):
+    try:
+        return strategy.storage.user.get_social_auth_for_user(user, provider=backend.name)
+    except AuthAlreadyAssociated:
+        if strategy.request.user.is_authenticated:
+            return {'social': strategy.storage.user.get_social_auth_for_user(strategy.request.user, provider=backend.name)[0],
+                    'user': strategy.request.user,
+                    'is_new': False}
