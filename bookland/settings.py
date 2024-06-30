@@ -141,7 +141,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 #STATIC_URL = 'static/'
-STATIC_URL = 'static/'
+"""STATIC_URL = 'static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
 
@@ -149,10 +149,21 @@ STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
-#DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')"""
+
+STATIC_URL = '/static/'
+MEDIA_URL = '/media/'
+
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images/')
+
+# Configuración adicional para imágenes de perfil
+PROFILE_PICS_DIR = 'profile_pics/'  # Ruta relativa a MEDIA_ROOT
+PROFILE_PICS_ROOT = os.path.join(MEDIA_ROOT, PROFILE_PICS_DIR)
+PROFILE_PICS_URL = os.path.join(MEDIA_URL, PROFILE_PICS_DIR)
+
 
 #social app costum settings
 AUTHENTICATION_BACKENDS  = [
@@ -168,9 +179,9 @@ LOGOUT_REDIRECT_URL = 'login_register'
 
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = env('ID_CLIENT')
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = env('GOOGLE_SECRET_KEY')
-from social_core.exceptions import AuthAlreadyAssociated
+#from social_core.exceptions import AuthAlreadyAssociated
 
-def social_user(strategy, details, backend, user=None, *args, **kwargs):
+"""def social_user(strategy, details, backend, user=None, *args, **kwargs):
     try:
         return strategy.storage.user.get_social_auth_for_user(user, provider=backend.name)
     except AuthAlreadyAssociated:
@@ -178,3 +189,4 @@ def social_user(strategy, details, backend, user=None, *args, **kwargs):
             return {'social': strategy.storage.user.get_social_auth_for_user(strategy.request.user, provider=backend.name)[0],
                     'user': strategy.request.user,
                     'is_new': False}
+                    """

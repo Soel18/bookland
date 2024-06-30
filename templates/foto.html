@@ -10,71 +10,7 @@
     <title>Foto</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="{% static 'css/foto.css' %}">
-    <style>
-        #page-content {
-            max-width: 1200px; /* Ajusta el ancho máximo según tus preferencias */
-            margin: 0 auto; /* Centra el contenido en la página */
-        }
 
-        .user-profile {
-            width: 30%; /* Ajusta el ancho del perfil según tus preferencias */
-        }
-
-        .user-info {
-            width: 70%; /* Ajusta el ancho de la información del usuario según tus preferencias */
-        }
-
-        #editForm {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 1000;
-            padding: 20px;
-            background-color: #fff;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-            max-width: 400px;
-            width: 100%;
-            opacity: 0;
-            transition: opacity 0.3s ease-in-out;
-        }
-
-        #editForm.show {
-            display: block;
-            opacity: 1;
-        }
-
-        #editForm label,
-        #editForm textarea,
-        #editForm input {
-            width: 100%;
-            margin-bottom: 15px;
-        }
-
-        #editForm textarea {
-            height: 100px;
-        }
-
-        #editForm button {
-            display: block;
-            width: 100%;
-            padding: 10px;
-            background-color: #6a1b9a;
-            color: #fff;
-            border: none;
-            cursor: pointer;
-            transition: background-color 0.3s ease-in-out;
-        }
-
-        #editForm button:hover {
-            background-color: #9c27b0;
-        }
-        .bg-c-lite-green {
-            background: -webkit-gradient(linear, left top, right top, from(#6a1b9a), to(#000000));
-            background: linear-gradient(to right, #000000, #6a1b9a);
-        }
-    </style>
 </head>
 <body style="background-image: linear-gradient(315deg, #9c27b0 0%, #6a1b9a 74%); background-color: #9c27b0;">
     <div class="page-content page-container" id="page-content">
@@ -103,7 +39,7 @@
                                         {% endif %}
                                     </div>
                                                                       
-                                    <h6 class="f-w-600">{{ user.first_name }} {{ user.last_name }}</h6>
+                                    <!--<h6 class="f-w-600">{{ user.first_name }} {{ user.last_name }}</h6>-->
                                     <p>{{user.biography}}</p>
                                     <a href="#" id="editBio"
                                         class="mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16">

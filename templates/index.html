@@ -1,47 +1,55 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Buscar Libros</title>
-    <style>
-        .book-list {
-            display: flex;
-            flex-wrap: wrap;
-        }
-        .book-item {
-            border: 1px solid #ddd;
-            padding: 10px;
-            margin: 10px;
-            width: 150px;
-            text-align: center;
-        }
-        .book-cover {
-            width: 128px;
-            height: 193px;
-        }
-    </style>
-</head>
-<body>
-    <form method="get" action="{% url 'index' %}">
-        <input type="text" name="q" placeholder="Buscar libros..." value="{{ request.GET.q }}">
-        <button type="submit">Buscar</button>
-    </form>
+{% extends "layout.html" %}
+{% load static %}
 
-    <div class="book-list">
-        {% if libros %}
-            {% for libro in libros %}
-                <div class="book-item">
-                    <a href="{% url 'detalle_libro' libro.key|slice:'7:' %}">
-                        <img class="book-cover" src="{{ libro.cover_url }}" alt="{{ libro.title_suggest }}">
-                        <p><strong>{{ libro.title_suggest }}</strong></p>
-                    </a>
-                    <p>por {{ libro.author_name|join:", " }}</p>
-                </div>
-            {% endfor %}
-        {% else %}
-            <p>No se encontraron libros.</p>
-        {% endif %}
+{% block title %}
+Inicio
+{% endblock %}
+
+{% block main %}
+<!-- Carrusel -->
+<div class="carrusel">
+    {% for libro in libros_random %}
+    <div class="carrusel-item {% if forloop.first %}active{% endif %}">
+        <div class="imagen-fondo">
+            <img src="{% static 'images/background.jpg' %}" alt="Fondo">
+        </div>
+        <div class="contenido-libro">
+            <div class="portada-libro">
+                <img src="{{ libro.cover_url }}" alt="Portada del Libro">
+            </div>
+            <div class="descripcion-libro">
+                <h3>{{ libro.title }}</h3>
+                <p>{{ libro.first_sentence }}</p> <!-- Ajusta este campo según la descripción disponible -->
+            </div>
+        </div>
     </div>
-</body>
-</html>
+    {% endfor %}
+</div>
+
+    <div class="carrusel-dots">
+        <!-- Los puntos para navegación del carrusel -->
+    </div> 
+
+    <!-- Agrega esta sección al final de tu body --> 
+    <div class="texto-encabezado">
+        <h2>Explora Nuestros Libros</h2>
+        <p>Descubre una amplia selección de libros recomendados para ti según tus intereses.</p>
+    </div>    
+
+    <section class="libros">
+        <div class="fila-libros">
+            {% if libros %}
+                {% for libro in libros %}
+                    <div class="libro">
+                        <a href="{% url 'detalle_libro' libro.key|slice:'7:' %}">
+                            <img src="{{ libro.cover_url }}" alt="{{ libro.title }}">
+                        </a>
+                        <p>{{ libro.title }}</p>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>No se encontraron libros.</p>
+            {% endif %}
+        </div>
+    </section>    
+{% endblock %}

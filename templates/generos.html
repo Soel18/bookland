@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+{% load static %}
+
+{% block title %}
+Géneros
+{% endblock %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">  
+
+{% block main %}
+<div class="container">
+    <h1>Libros por Género</h1>
+    {% for genero, libros in libros_por_genero.items %}
+    <div class="genre-section">
+        <h2>{{ genero }}</h2>
+        <div class="carousel">
+            <button class="carousel-button prev">&lt;</button>
+            <div class="book-list">
+                {% for libro in libros %}
+                <div class="book-item">
+                    <img src="{{ libro.cover_url }}" alt="{{ libro.title }}">
+                </div>
+                {% endfor %}
+            </div>
+            <button class="carousel-button next">&gt;</button>
+        </div>
+    </div>
+    {% endfor %}
+    
+</div>
+{% endblock %}

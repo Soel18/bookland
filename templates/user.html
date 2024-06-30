@@ -1,0 +1,271 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/styleuser.css' %}">
+    <title>Perfil de Usuario</title>
+    <style>
+        .profile-picture-container {
+            max-width: 100%;
+            max-height: 200px;
+            overflow: hidden;
+        }
+
+        .profile-picture-container img {
+            width: 100%;
+            height: auto;
+        }
+
+        /* Modal styles */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1000; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgba(0, 0, 0, 0.6); /* Black w/ opacity */
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+        }
+
+        .modal-content {
+            background-color: #fefefe00;
+            margin: auto;
+            padding: 30px;
+            border: 1px solid #888;
+            width: 100%;
+            max-width: 500px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            animation: fadeIn 0.3s;
+            position: relative;
+        }
+
+        .close {
+            color: #aaa;
+            position: absolute;
+            right: 15px;
+            top: 10px;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .modal h2 {
+            margin-top: 0;
+        }
+
+        .modal label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        .modal textarea,
+        .modal input[type="file"] {
+            width: 100%;
+            margin-top: 5px;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #393737;
+            font-size: 16px;
+        }
+
+        .modal button[type="submit"] {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .modal button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        .btn-index {
+            display: inline-block;
+            margin-bottom: 15px;
+            padding: 10px 20px;
+            background-color: #000000;
+            color: white;
+            text-align: center;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .btn-index:hover {
+            background-color: #535353;
+        }
+    </style>
+</head>
+<body>
+    <div class="page-content page-container" id="page-content">
+        <div class="padding">
+            <div class="row container d-flex justify-content-center">
+                <div class="col-xl-6 col-md-12">
+                    <!-- Botón para ir al index -->
+                    <a href="{% url 'index' %}" class="btn-index">Ir al Index</a>
+
+                    <div class="card user-card-full">
+                        <div class="row m-l-0 m-r-0">
+                            <div class="col-sm-4 bg-c-lite-green user-profile">
+                                <div class="card-block text-center text-white">
+                                    <div class="m-b-25">
+                                        {% if user.profile_picture %}
+                                            <img src="{{ user.profile_picture.url }}" class="img-radius" alt="User Profile Image">
+                                        {% else %}
+                                            {% if user.gender == 'male' %}
+                                                <img src="{% static 'images/user_male.webp' %}" class="img-radius" alt="Male Default Image">
+                                            {% elif user.gender == 'female' %}
+                                                <img src="{% static 'images/user_female.png' %}" class="img-radius" alt="Female Default Image">
+                                            {% else %}
+                                                <img src="{% static 'images/user_unknown.png' %}" class="img-radius" alt="Default User Image">
+                                            {% endif %}
+                                        {% endif %}
+                                    </div>
+                                    <input type="text" class="f-w-600 text-center form-control" id="username" value="{{ user.username }}" readonly>
+                                    <p>{{ user.biography }}</p>
+                                    <a href="#" id="editBio" class="mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16">Editar biografía</a>
+                                    <a href="#" id="editProfilePic" class="mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16">Cambiar foto de perfil</a>
+                                </div>
+                            </div>
+                            <div class="col-sm-8">
+                                <div class="card-block">
+                                    <h6 class="m-b-20 p-b-5 b-b-default f-w-600">Información</h6>
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <p class="m-b-10 f-w-600">Correo Electrónico</p>
+                                            <h6 class="text-muted f-w-400">{{ user.email }}</h6>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <p class="m-b-10 f-w-600">Contraseña</p>
+                                            <h6 class="text-muted f-w-400">********</h6>
+                                        </div>
+                                    </div>
+                                    <!-- user.html -->
+                                    <h6 class="m-b-20 m-t-40 p-b-5 b-b-default f-w-600">Preferencias</h6>
+                                    <div class="row">
+                                        <div class="card-block">
+                                            <h6 class="m-b-20 m-t-40 p-b-5 b-b-default f-w-600">Preferencias</h6>
+                                            <form method="post" action="{% url 'foto' %}">
+                                                {% csrf_token %}
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <label for="favorite_genres" class="m-b-10 f-w-600">Selecciona hasta 3 Géneros Favoritos de Lectura:</label>
+                                                        <div id="generos-favoritos" class="btn-group" role="group" aria-label="Géneros de Lectura">
+                                                            {% for genero in generos_populares %}
+                                                                <button type="button" class="btn btn-outline-primary" data-genero="{{ genero }}">{{ genero }}</button>
+                                                            {% endfor %}
+                                                        </div>
+                                                        <input type="hidden" name="favorite_genres" id="favorite_genres">
+                                                    </div>
+                                                </div>
+                                                <button type="submit" class="btn btn-primary">Guardar Géneros Favoritos</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Editar Perfil</h2>
+            <form method="post" action="{% url 'user_profile' %}" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div id="bioField">
+                    <label for="id_biography">Nueva biografía:</label>
+                    <textarea name="biography" id="id_biography">{{ user.biography }}</textarea>
+                </div>
+                <div id="profilePicField" style="display:none;">
+                    <label for="id_profile_picture">Nueva foto de perfil:</label>
+                    <input type="file" name="profile_picture" id="id_profile_picture">
+                </div>
+                <button type="submit">Guardar cambios</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const editBioBtn = document.getElementById('editBio');
+            const editProfilePicBtn = document.getElementById('editProfilePic');
+            const modal = document.getElementById('editModal');
+            const closeModal = document.querySelector('.modal .close');
+            const bioField = document.getElementById('bioField');
+            const profilePicField = document.getElementById('profilePicField');
+
+            editBioBtn.addEventListener('click', function (e) {
+                e.preventDefault();
+                modal.style.display = 'flex';
+                bioField.style.display = 'block';
+                profilePicField.style.display = 'none';
+            });
+
+            editProfilePicBtn.addEventListener('click', function (e) {
+                e.preventDefault();
+                modal.style.display = 'flex';
+                bioField.style.display = 'none';
+                profilePicField.style.display = 'block';
+            });
+
+            closeModal.addEventListener('click', function () {
+                modal.style.display = 'none';
+            });
+
+            window.addEventListener('click', function (event) {
+                if (event.target == modal) {
+                    modal.style.display = 'none';
+                }
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const buttons = document.querySelectorAll('#generos-favoritos button');
+            buttons.forEach(button => {
+                button.addEventListener('click', () => {
+                    button.classList.toggle('btn-primary');
+                    button.classList.toggle('btn-outline-primary');
+                    updateSelectedGenres();
+                });
+            });
+
+            function updateSelectedGenres() {
+                const selectedGenres = Array.from(buttons)
+                    .filter(button => button.classList.contains('btn-primary'))
+                    .map(button => button.dataset.genero);
+                document.getElementById('favorite_genres').value = selectedGenres.slice(0, 3).join(',');
+            }
+        });
+    </script>
+</body>
+</html>

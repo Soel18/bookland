@@ -1,0 +1,593 @@
+/* ===== Google Font Import - Poppins ===== */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+    transition: all 0.4s ease;;
+}
+
+/* ===== Colours ===== */
+:root {
+    --body-color: #fff;
+    --nav-color: url('../images/head.jpg');
+    --nav-shadown: #848884;
+    --side-nav: #913831;
+    --text-color: #FFF;  
+    --search-bar: #F2F2F2;
+    --search-text: #010718;
+}
+
+body {
+    height: 100vh;
+    background-color: var(--body-color);
+}
+
+body.dark {
+    --body-color: #18191A;
+    /*--nav-color: #242526;*/
+    --nav-color: url('../images/head.jpg');
+    --side-nav: #242526;
+    --text-color: #CCC;
+    --search-bar: #242526;
+}
+
+nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 70px;
+    width: 100%;
+    background-image: var(--nav-color);
+    z-index: 100;
+}
+
+body.dark nav {
+    border: 1px solid #393838;
+}
+
+nav .nav-bar {
+    position: relative;
+    height: 100%;
+    max-width: 1000px;
+    width: 100%;
+    background-color: var(--nav-color);
+    margin: 0 auto;
+    padding: 0 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+nav .nav-bar .sidebarOpen {
+    color: var(--text-color);
+    font-size: 25px;
+    padding: 5px;
+    cursor: pointer;
+    display: none;
+}
+
+nav .nav-bar .logo a {
+    font-size: 25px;
+    font-weight: 500;
+    color: var(--text-color);
+    text-decoration: none;
+}
+
+.menu .logo-toggle {
+    display: none;
+}
+
+.nav-bar .nav-links {
+    display: flex;
+    align-items: center;
+}
+
+.nav-bar .nav-links li {
+    margin: 0 5px;
+    list-style: none;
+}
+
+.nav-links li a {
+    position: relative;
+    font-size: 17px;
+    font-weight: 400;
+    color: var(--text-color);
+    text-decoration: none;
+    padding: 10px;
+    transition: box-shadow 0.3s ease;
+}
+
+.nav-links li a::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+    height: 6px;
+    width: 6px;
+    border-radius: 50%;
+    background-color: var(--text-color);
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+.nav-links li a:hover {
+    background-color: #01071892;
+    font-size: 20px;
+    color: #F2F2F2;
+    box-shadow: 0 0 20px #fff;
+    border-radius: 10px;
+}
+
+.nav-links li:hover a::before {
+    opacity: 1;
+}
+
+.nav-bar .darkLight-searchBox{
+    display: flex;
+    align-items: center;
+}
+
+.darkLight-searchBox .dark-light{ 
+    height: 10px;
+    width: 10px;
+    display: flex;
+    position: absolute, relative;
+    color: var(--text-color);
+    font-size: 22px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.darkLight-searchBox .searchToggle{
+    height: 10px;
+    width: 100px;
+    display: flex;
+    position: absolute, relative;
+    align-items: center;
+    justify-content: center;
+    margin: 0 5px;
+} 
+
+.logo-user i{
+    height: 10px;
+    width: 70px;
+    bottom: 20px;
+    display: flex;
+    position: absolute, relative;
+    align-items: center;
+    justify-content: center;
+    color: #FFF;
+    font-size: 22px;
+    pointer-events: none;
+}
+
+.dark-light i{
+    width: 30px;
+    display: flex;
+    bottom: 20px;
+    position: absolute, relative;
+    color: var(--text-color);
+    font-size: 22px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.searchToggle i{ 
+    height: 1px;
+    width: 1px;
+    display: flex;
+    position: absolute;
+    color: var(--text-color);
+    font-size: 22px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.dark-light i.sun{
+    opacity: 0;
+    pointer-events: none;
+}
+
+.dark-light.active i.sun{
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.dark-light.active i.moon{
+    width: 0px;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.searchToggle i.cancel{
+    opacity: 0;
+    pointer-events: none;
+}
+
+.searchToggle.active i.cancel{
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.searchToggle.active i.search{
+    opacity: 0;
+    pointer-events: none;
+}
+
+.searchBox{
+    position: relative;
+}
+
+.searchBox .search-field{
+    position: absolute;
+    bottom: -85px;
+    right: 5px;
+    height: 40px;
+    width: 300px;
+    display: flex;
+    align-items: center;
+    background-color: var(--nav-color);
+    padding: 3px;
+    border-radius: 6px;
+    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.3s ease;
+}
+
+.searchToggle.active ~ .search-field{
+    bottom: -74px;
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.search-field::before{
+    content: '';
+    position: absolute;
+    right: 14px;
+    top: -4px;
+    height: 12px;
+    width: 12px;
+    background-color: var(--nav-color);
+    transform: rotate(-45deg);
+    z-index: -1;
+}
+
+.search-field input{
+    height: 100%;
+    width: 100%;
+    padding: 0 45px 0 15px;
+    outline: none;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--search-text);
+    background-color: var(--search-bar);
+}
+
+body.dark .search-field input{
+    color: var(--text-color);
+}
+
+.search-field i{
+    position: absolute;
+    color: var(--nav-color);
+    right: 15px;
+    font-size: 22px;
+    cursor: pointer;
+}
+
+body.dark .search-field i{
+    color: var(--text-color);
+}
+
+@media (max-width: 790px) {
+    nav .nav-bar .sidebarOpen{
+        display: block;
+    }
+
+    .menu{
+        position: fixed;
+        height: 100%;
+        width: 320px;
+        left: -100%;
+        top: 0;
+        padding: 20px;
+        background-color: var(--side-nav);
+        z-index: 100;
+        transition: all 0.4s ease;
+    }
+
+    nav.active .menu{
+        left: -0%;
+    }
+
+    nav.active .nav-bar .navLogo a{
+        opacity: 0;
+        transition: all 0.3s ease;
+    }
+
+    .menu .logo-toggle{
+        display: block;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .logo-toggle .siderbarClose{
+        color: var(--text-color);
+        font-size: 24px;
+        cursor: pointer;
+    }
+
+    .nav-bar .nav-links{
+        flex-direction: column;
+        padding-top: 30px;
+    }
+
+    .nav-links li a{
+        display: block;
+        margin-top: 20px;
+    }
+
+    .dropdown-content i {
+        margin: 0;
+      }
+      
+      .dropdown:hover .dropdown-content {
+        display: block;
+      }
+}
+
+/* ===== Carrusel ===== */
+/* Estilos generales */
+/* Estilos para el carrusel */
+.carrusel {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    height: 300px;
+    margin-top: 80px; /* Ajusta según la altura del navbar */
+}
+
+.carrusel-item {
+    position: absolute;
+    top: 0;
+    left: 100%;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    transition: left 0.5s ease-in-out;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.carrusel-item.active {
+    left: 0;
+    opacity: 1;
+} 
+
+.imagen-fondo img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+}
+
+.imagen-fondo img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.3; /* Opacidad de la imagen de fondo */
+}
+
+.contenido-libro {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding-left: 35%;
+}
+
+.portada-libro img { 
+    margin-right: 20px;
+    width: 150px;
+    height: 250px;
+    object-fit: cover;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
+}
+
+.descripcion-libro {
+    margin-left: 20px;
+    max-width: 60%;
+    color: #FFF;
+}
+
+.descripcion-libro h3 { 
+    margin-bottom: 10px;
+}
+
+.descripcion-libro p { 
+    font-size: 14px;
+    line-height: 1.5;
+}  
+
+/* Responsivo para tablets y pantallas pequeñas */
+@media (max-width: 768px) {
+    .contenido-libro {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center; /* Sigue centrado horizontalmente */
+        padding-left: 0;
+        text-align: center;
+        padding: 0 80px; /* Opcional, ajusta según el espacio que desees */
+    }
+
+    .portada-libro img {
+        margin: 0 auto 10px; /* Centramos la imagen y damos espacio inferior */
+        width: 120px;
+        height: 160px;
+    }
+
+    .descripcion-libro {
+        margin: 0 auto;
+        max-width: 80%;
+    }
+}
+
+
+/* Responsivo para móviles */
+@media (max-width: 480px) {
+    .carrusel { 
+        height: 500px; /* Ajuste de la altura del carrusel */
+    } 
+
+    .contenido-libro {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center; /* Sigue centrado horizontalmente */
+        padding-left: 0;
+        text-align: center;
+        padding: 0 80px; /* Opcional, ajusta según el espacio que desees */
+    }
+
+    .portada-libro img {   
+        margin: 0 auto 50px;
+        width: 120px;
+        height: 180px;
+    }
+
+    .descripcion-libro {  
+        margin: 0 auto;
+        max-width: 100%; 
+    } 
+
+    .descripcion-libro p {
+        font-size: 12px; /* Tamaño de fuente más pequeño */
+    }
+}
+
+/* Ajuste de los puntos de navegación del carrusel */
+.carrusel-dots {
+    position: absolute;
+    bottom: 300px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+}
+
+.carrusel-dots button {
+    background: #ccc;
+    border: none;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin: 0 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.carrusel-dots button.active {
+    background: #333;
+}
+
+/* libros segun los gustos */ 
+.texto-encabezado {
+    text-align: center;
+    margin: 150px 0;
+}
+
+.texto-encabezado h2 {
+    font-size: 28px;
+    margin-bottom: 0px;
+}
+
+.texto-encabezado p {
+    font-size: 16px;
+    color: #666;
+}
+
+/* Agrega estos estilos al final de tu archivo style.css */ 
+.p {
+    text-align: center;
+    width: 20;
+    height: 0;
+    font-size: 20px; 
+    padding: 0px; 
+    color: #FFF;
+}
+
+.libros {
+    max-width: 1200px;
+    margin: -100px auto;
+    padding: 10px;
+}
+
+.fila-libros {
+    display: flex; 
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin-bottom: 10px;
+}
+
+.libro {
+    width: calc(25% - 10px); /* Para mantener un margen entre los libros */
+    text-align: center; 
+    margin-bottom: 20px;
+}
+
+.libro img {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.libro img:hover {
+    transform: scale(1.05);
+}
+
+.libro h3 {
+    margin: 10px 0;
+}
+
+.libro p {
+    font-size: 14px;
+    line-height: 1.5;
+    color: #666;
+} 
+
+/* Responsivo para tablets y pantallas pequeñas */
+@media (max-width: 990px) {
+    .libro {
+        width: calc(33.33% - 10px); /* Muestra 3 libros por fila */
+    }
+}
+
+/* Responsivo para móviles */
+@media (max-width: 650px) {
+    .libro {
+        width: calc(50% - 10px); /* Muestra 2 libros por fila */
+    }
+}
+
+/* Responsivo para pantallas muy pequeñas */
+@media (max-width: 480px) {
+    .libro {
+        width: 100%; /* Muestra 1 libro por fila */
+    }
+}
+

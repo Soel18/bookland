@@ -1,0 +1,451 @@
+body {
+    background-image: url('../images/head.jpg');
+    font-family: Arial, sans-serif; 
+} 
+
+.background-image {
+    width: 300%;
+    height: 200%;
+    background-image: url('../images/fondo');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    opacity: 0.5; /* Ajusta la opacidad aquí (0.0 a 1.0) */
+}
+
+/* Asegúrate de que el cuerpo y el HTML cubran toda la pantalla */
+body, html {
+    position: center;
+    background: transparent(right, #000000c4, #000000);
+    height: 0%;
+    width: 100%;
+    margin: -10;
+    font-family: Arial, sans-serif;
+    color: #fff;
+}
+
+/* Fondo con imagen */
+.background-overlay {
+    position: center;
+    top: 10;
+    left: 30;
+    width: 100%;
+    height: 100%;
+    background-image: url('../images/head.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center; /* Ajusta la opacidad aquí (0.0 a 1.0) */
+}
+
+/* Contenido que estará encima del fondo */
+.content {
+    margin-left: -100px;
+    margin-right: -350px;
+    height: 50px;
+    width: 50px;
+    position: center;
+    z-index: 1; /* Asegura que el contenido esté encima del fondo */
+    text-align: center;
+    padding-top: 20%; /* Ajusta según sea necesario */
+}
+
+
+.padding {
+    padding: 30rem !important
+}
+
+.user-card-full {
+    background: transparent;
+    overflow: hidden; 
+    position: center;
+}
+
+.card {
+    background: linear-gradient(#292020c4, #000000);
+    border-radius: 5px;
+    background-position: center center;
+    -webkit-box-shadow: 0 1px 20px 0 rgb(0, 0, 0);
+    box-shadow: 0 1px 20px 0 rgba(0, 0, 0, 0.08);
+    border: none;
+    margin-bottom: 0px;
+    text-align: center;
+}
+
+.m-r-0 {
+    margin-right: 40px;
+}
+
+.m-l-0 {
+    margin-left: 60px;
+}
+
+.user-card-full .user-profile {
+    border-radius: 50px 10 10 50px;
+}
+
+.bg-c-lite-green {
+    background: webkit-gradient(linear, left top, right top, from(#f29263), to(#ee5a6f));
+    background: linear-gradient(to right, #000000c4, #3d3a3a);
+    
+}
+
+.user-profile {
+    padding: 50px 50; 
+}
+
+.card-block {
+    position: center;
+    background: transparent(right, #7c7676c4, #000000);
+    padding: 1.25rem;
+}
+
+.m-b-25 {
+    margin-bottom: 5px;
+}
+
+.img-radius {
+    border-radius: 0px;
+    width: 180px; /* Ajusta este valor según el tamaño deseado */
+    height: 200px; /* Ajusta este valor según el tamaño deseado */
+    border-radius: 80%; /* Esto hace que la imagen sea circular */
+    object-fit: cover; /* Asegura que la imagen se recorte adecuadamente */
+}
+
+h6 {
+    font-size: 40px;
+}
+
+.card .card-block p {
+    line-height: 25px;
+}
+
+@media only screen and (min-width: 1400px){
+p {
+    font-size: 40px;
+}
+}
+
+.card-block {
+    padding: 0.25rem;
+}
+
+.b-b-default {
+    border-bottom: 20px solid #e0e0e0;
+}
+
+.m-b-20 {
+    margin-bottom: 20px;
+}
+
+.p-b-5 {
+    padding-bottom: 50px !important;
+}
+
+.card .card-block p {
+    line-height: 55px;
+}
+
+.m-b-10 {
+    margin-bottom: 50px;
+}
+
+.text-muted {
+    color: #ffffff !important;
+}
+
+.b-b-default {
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.f-w-600 {
+    font-weight: 600;
+}
+
+.m-b-20 {
+    margin-bottom: 20px;
+}
+
+.m-t-40 {
+    margin-top: 20px;
+}
+
+.p-b-5 {
+    padding-bottom: 5px !important;
+}
+
+.m-b-10 {
+    margin-bottom: 50px;
+}
+
+.m-t-40 {
+    margin-top: 20px;
+}
+
+.user-card-full .social-link li {
+    position: center;
+    display: inline-block;
+}
+
+.user-card-full .social-link li a {
+    font-size: 50px;
+    margin: 0 10px 0 0;
+    -webkit-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+}
+
+/* Móviles (portrait y landscape) */
+@media (max-width: 575.98px) { 
+    .padding {
+        padding: 0rem !important;
+    }
+    
+    .card {
+        margin-bottom: 50px;
+    }
+    
+    .img-radius {
+    width: 180px; /* Ajusta este valor según el tamaño deseado */
+    height: 180px; /* Ajusta este valor según el tamaño deseado */
+    border-radius: 50%; /* Esto hace que la imagen sea circular */
+    object-fit: cover; /* Asegura que la imagen se recorte adecuadamente */
+    }
+
+    h6 {
+        font-size: 40px;
+    }
+
+    p {
+        font-size: 20px;
+        line-height: 40px;
+    }
+
+    .user-card-full {
+        flex-direction: column;
+    }
+
+    .user-card-full .user-profile {
+        border-radius: 5px 5px 0 0;
+    }
+}
+
+/* Tablets */
+@media (min-width: 576px) and (max-width: 767.98px) { 
+    .padding {
+        padding: 20rem !important;
+    }
+
+    .card {
+        margin-bottom: 25px;
+    }
+
+    .img-radius {
+        width: 280px; /* Ajusta este valor según el tamaño deseado */
+        height: 280px; /* Ajusta este valor según el tamaño deseado */
+        border-radius: 50%; /* Esto hace que la imagen sea circular */
+        object-fit: cover; /* Asegura que la imagen se recorte adecuadamente */
+    }
+    
+    h6 {
+        font-size: 13px;
+    }
+
+    p {
+        font-size: 13px;
+        line-height: 22px;
+    }
+}
+
+/* Dispositivos pequeños */
+@media (min-width: 768px) and (max-width: 991.98px) { 
+    .padding {
+        padding: 0rem !important;
+    }
+    
+    .card {
+        margin-bottom: 280px;
+        width: -350;
+        margin: 100;
+    }
+
+    .img-radius {
+        width: 380px; /* Ajusta este valor según el tamaño deseado */
+        height: 280px; /* Ajusta este valor según el tamaño deseado */
+        border-radius: 50%; /* Esto hace que la imagen sea circular */
+        object-fit: cover; /* Asegura que la imagen se recorte adecuadamente */
+        }
+    
+
+    h6 {
+        font-size: 60px;
+    }
+
+    p {
+        font-size: 55px;
+        line-height: 100px;
+    }
+}
+
+/* Dispositivos medianos */
+@media (min-width: 992px) and (max-width: 1199.98px) { 
+    .padding {
+        padding: 30rem !important;
+    }
+    
+    .card {
+        margin-bottom: 30px;
+    }
+
+    h6 {
+        font-size: 40px;
+    }
+
+    p {
+        font-size: 40px;
+        line-height: 25px;
+    }
+}
+
+/* Dispositivos grandes */
+@media (min-width: 1200px) and (max-width: 1399.98px) {
+    .padding {
+        padding: 3rem !important;
+    }
+
+    .card {
+        margin-bottom: 30px;
+    }
+
+    h6 {
+        font-size: 35px;
+        justify-content: center;
+    }
+
+    p {
+        font-size: 25px;
+        justify-content: center;
+        line-height: 20px;
+    }
+}
+
+/* Dispositivos muy grandes */ 
+@media (min-width: 1400px) { 
+    .padding {
+        padding: 10rem !important;
+        justify-content: center; 
+        position: center;
+    }
+
+    .card {
+        margin-bottom: 5px;
+        justify-content: center;
+        position: center;
+    }
+
+    h6 {
+        font-size: 40px;
+        justify-content: center;
+        position: center;
+    }
+
+    p {
+        font-size: 30px;
+        line-height: 20px;
+        justify-content: center;
+        position: center;
+    }
+}
+
+.user-profile-img {
+    width: 550px; /* Ajusta este valor según el tamaño deseado */
+    height: 550px; /* Ajusta este valor según el tamaño deseado */
+    border-radius: 80%; /* Esto hace que la imagen sea circular */
+    object-fit: cover; /* Asegura que la imagen se recorte adecuadamente */
+}
+
+/* Media queries para ajustar el tamaño en diferentes pantallas */
+@media (max-width: 575.98px) {
+    .user-profile-img {
+        width: 500px;
+        height: 400px;
+    }
+}
+
+@media (min-width: 576px) and (max-width: 767.98px) {
+    .user-profile-img {
+        width: 120px;
+        height: 120px;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991.98px) {
+    .user-profile-img {
+        width: 230px;
+        height: 530px;
+    }
+}
+
+@media (min-width: 992px) and (max-width: 1199.98px) {
+    .user-profile-img {
+        width: 240px;
+        height: 340px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .user-profile-img {
+        width: 450px;
+        height: 350px;
+    }
+}
+
+/* Estilo de preferencias */
+/* Estilos para los botones de géneros favoritos */
+.btn-group .btn {
+    font-size: 30px; /* Agranda el tamaño del texto */
+    padding: 25px 30px; /* Agranda el tamaño del botón */
+    margin: 15px; /* Espacio entre los botones */
+    border-radius: 10px; /* Bordes redondeados */
+    transition: background-color 0.3s ease; /* Transición suave para el cambio de color */
+}
+
+.btn-group .btn-outline-primary {
+    background-color: #6d6d6d; /* Color de fondo de los botones */
+    border-color: #6a6d70; /* Color del borde */
+    color: #000000; /* Color del texto */
+}
+
+.btn-group .btn-primary {
+    background-color: #23262b; /* Color de fondo de los botones al estar activos */
+    border-color: #6a6d70; /* Color del borde al estar activos */
+    color: #ffffff; /* Color del texto al estar activos */
+}
+
+.btn-group .btn:hover {
+    background-color: #383e46; /* Color de fondo al pasar el ratón */
+    border-color: #6a6d70; /* Color del borde al pasar el ratón */
+    color: #ffffff; /* Color del texto al pasar el ratón */
+}
+
+/* Estilos para los campos editables */
+.form-control {
+    background: transparent;
+    color: #ffffff;
+    padding: 20px;
+    font-size: 30px;
+    margin-bottom: 50px;
+    border: none;
+}
+
+.form-control:focus {
+    background: #333333;
+    border-color: #727375;
+    outline: none;
+}
+
+.text-center {
+    text-align: center;
+    outline: none;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
