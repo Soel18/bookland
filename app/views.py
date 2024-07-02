@@ -192,76 +192,54 @@ def geners(request):
 
     return render(request, 'generos.html', context)
 
-#@login_required(login_url='login')
-"""def index(request):
-    user = request.user
-    favorite_genres = user.favorite_genres.split(',') if user.favorite_genres else []
+def generate_random_name():
+    first_names = [
+        "Juan", "María", "Carlos", "Laura", "Pedro", "Ana", "Luis", "Elena",
+        "John", "Mary", "James", "Linda", "Michael", "Patricia", "David", "Jennifer"
+    ]
+    last_names = [
+        "García", "Martínez", "Rodríguez", "López", "Hernández", "González", "Pérez", "Sánchez",
+        "Smith", "Johnson", "Williams", "Brown", "Jones", "Miller", "Davis", "Garcia"
+    ]
+    
+    return f"{random.choice(first_names)} {random.choice(last_names)}"
+
+def get_author_details(author_key):
+    try:
+        if not author_key.startswith('/authors/'):
+            author_key = f'/authors/{author_key}'
+        response = requests.get(f'https://openlibrary.org{author_key}.json')
+        if response.status_code == 200:
+            return response.json()
+        return {}
+    except requests.RequestException as e:
+        print(f"Error fetching author details: {e}")
+        return {}
+
+@login_required(login_url='login')
+def writers(request):
     query = request.GET.get('q', '')
-    libros = []
+    if not query:
+        query = generate_random_name()
 
-    # Obtener libros basados en los géneros favoritos del usuario si están disponibles
-    if favorite_genres:
-        response = requests.get('https://openlibrary.org/subjects.json', params={'subject': favorite_genres})
-        response.raise_for_status()
+    authors = []
+    response = requests.get('https://openlibrary.org/search/authors.json', params={'q': query, 'limit': 8})
+    if response.status_code == 200:
         data = response.json()
-        works = data.get('works', [])
-        for work in works:
-            response = requests.get(f'https://openlibrary.org{work["key"]}.json')
-            response.raise_for_status()
-            libro = response.json()
-            libros.append({
-                'title': libro.get('title', 'Título no disponible'),
-                'authors': libro.get('authors', []),
-                'cover_url': f'https://covers.openlibrary.org/b/id/{libro.get("covers")[0]}-L.jpg' if libro.get("covers") else 'https://via.placeholder.com/128x193?text=No+Cover',
+        for author in data.get("docs", []):
+            author_key = author.get("key").split("/")[-1]  # Extract the key like OL229501A
+            authors.append({
+                "name": author.get("name", "Nombre no disponible"),
+                "key": author_key,
+                "description": "Biografía no disponible",  # Description might not be available in search results
+                "image_url": f'https://covers.openlibrary.org/a/olid/{author_key}-M.jpg' if author_key else 'https://via.placeholder.com/256x256?text=No+Photo'
             })
-
-    # Si hay una búsqueda de título, añadir también esos libros
-    if query:
-        response = requests.get('https://openlibrary.org/search.json', params={'title': query})
-        response.raise_for_status()
-        data = response.json()
-        libros.extend([
-            {
-                'title': libro.get('title', 'Título no disponible'),
-                'authors': libro.get('author_name', []),
-                'cover_url': f'https://covers.openlibrary.org/b/id/{libro.get("cover_i")}-L.jpg' if libro.get("cover_i") else 'https://via.placeholder.com/128x193?text=No+Cover',
-            } for libro in data.get('docs', [])
-        ])
+    else:
+        print("Error al obtener autores:", response.status_code)
 
     context = {
-        'libros': libros,
+        "authors": authors,
+        'query': query
     }
-    print(context)
-    return render(request, 'index.html', context)
-"""
-# Vista para detalles de un libro
 
-
-# Vista para detalles de un libro
-#@login_required(login_url='login')
-"""def detalle_libro(request, olid):
-    response = requests.get(f'https://openlibrary.org/works/{olid}.json')
-    response.raise_for_status()
-    libro = response.json()
-
-    libro['cover_url'] = f'https://covers.openlibrary.org/b/id/{libro.get("covers")[0]}-L.jpg' if libro.get("covers") else 'https://via.placeholder.com/128x193?text=No+Cover'
-
-    # Obtiene ediciones del libro
-    ediciones_response = requests.get(f'https://openlibrary.org/works/{olid}/editions.json')
-    ediciones_response.raise_for_status()  # Asegura que la solicitud fue exitosa
-    ediciones = ediciones_response.json().get('entries', [])
-
-    # Filtra las ediciones que tienen opciones de lectura
-    ediciones_lectura = []
-    for edicion in ediciones:
-        availability = edicion.get('availability', {})
-        read_url = availability.get('read', None)
-        if read_url:
-            ediciones_lectura.append({
-                'title': edicion.get('title', 'Título no disponible'),
-                'url': read_url,
-                'cover_url': f'https://covers.openlibrary.org/b/id/{edicion.get("covers")[0]}-M.jpg' if edicion.get("covers") else 'https://via.placeholder.com/128x193?text=No+Cover'
-            })
-
-    return render(request, 'detalle_libro.html', {'libro': libro, 'ediciones_lectura': ediciones_lectura})
-"""
+    return render(request, 'escritores.html', context)

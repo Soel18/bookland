@@ -113,7 +113,7 @@ nav .nav-bar .logo a {
 .nav-links li a::before {
     content: '';
     position: absolute;
-    left: 80%;
+    left: 50%;
     bottom: 0;
     transform: translateX(-50%);
     height: 6px;
@@ -399,10 +399,11 @@ body.dark .search-field i{
 }
 
 .imagen-fondo img {
+    box-shadow: #010718;
     width: 100%;
     height: 100%;
     object-fit: cover;
-    opacity: 0.2; /* Opacidad de la imagen de fondo */
+    opacity: 0.70; /* Opacidad de la imagen de fondo */
 }
 
 .contenido-libro {

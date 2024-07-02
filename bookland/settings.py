@@ -173,7 +173,7 @@ AUTHENTICATION_BACKENDS  = [
 
 
 LOGIN_URL = 'login_register'
-LOGIN_REDIRECT_URL = 'index'
+LOGIN_REDIRECT_URL = 'foto'
 LOGOUT_URL = 'logout'
 LOGOUT_REDIRECT_URL = 'login_register'
 

@@ -22,6 +22,7 @@ class Author(models.Model):
     bio = models.TextField()
     birth_date = models.DateField(null=True, blank=True)  # Fecha de nacimiento
     country = models.CharField(max_length=100, null=True, blank=True)  # País
+    #reaction = models.BooleanField()
 
     def __str__(self):
         return self.name
@@ -31,8 +32,6 @@ class Book(models.Model):
     author = models.ForeignKey(Author, on_delete=models.CASCADE)
     description = models.TextField()
     published_date = models.DateField()
-    # Puedes añadir un campo para almacenar el archivo del libro (pdf, epub, etc.)
-    # file = models.FileField(upload_to='books/files/')
 
     def __str__(self):
         return self.title

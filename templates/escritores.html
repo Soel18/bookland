@@ -1,0 +1,61 @@
+{% extends "layout.html" %}
+{% load static %}
+
+{% block title %}
+Escritores
+{% endblock %}
+{% block main %}
+<section class="writers-section">
+    <h2>Escritores</h2>
+    <div class="writers-list">
+        {% for author in authors %}
+        <div class="writer-card {% if forloop.counter0|divisibleby:2 %}left{% else %}right{% endif %}">
+            <img src="{{ author.image_url }}" alt="{{ author.name }}" class="author-image">
+            <div class="writer-info">
+                <h3>{{ author.name }}</h3>
+                <p>{{ author.description }}</p>
+                {% if author.wikipedia_url %}
+                <p><a href="{{ author.wikipedia_url }}" target="_blank">Más información en Wikipedia</a></p>
+                {% endif %}
+                <div class="like-dislike">
+                    <i class='bx bxs-like'></i> <span class="like-count">0</span>
+                    <i class='bx bxs-dislike'></i> <span class="dislike-count">0</span>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const likeButtons = document.querySelectorAll('.bxs-like');
+        const dislikeButtons = document.querySelectorAll('.bxs-dislike');
+
+        likeButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const likeCount = button.nextElementSibling;
+                let count = parseInt(likeCount.textContent);
+                if (button.classList.toggle('active')) {
+                    likeCount.textContent = ++count;
+                } else {
+                    likeCount.textContent = --count;
+                }
+            });
+        });
+
+        dislikeButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const dislikeCount = button.nextElementSibling;
+                let count = parseInt(dislikeCount.textContent);
+                if (button.classList.toggle('active')) {
+                    dislikeCount.textContent = ++count;
+                } else {
+                    dislikeCount.textContent = --count;
+                }
+            });
+        });
+    });
+</script>

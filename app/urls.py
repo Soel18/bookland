@@ -14,7 +14,8 @@ urlpatterns = [
     path('login/google/', aut_views.LoginView.as_view(), name='google-login'),
     path('foto/', views.foto_view, name='foto'),
     path('user_profile/', views.user_profile, name='user_profile'),    
-    path('geners', views.geners, name='geners')
+    path('geners/', views.geners, name='geners'),
+    path('writers/', views.writers, name='writers' )
 ]
 
 if settings.DEBUG:
