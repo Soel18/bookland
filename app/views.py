@@ -194,11 +194,9 @@ def geners(request):
 
 def generate_random_name():
     first_names = [
-        "Juan", "María", "Carlos", "Laura", "Pedro", "Ana", "Luis", "Elena",
         "John", "Mary", "James", "Linda", "Michael", "Patricia", "David", "Jennifer"
     ]
     last_names = [
-        "García", "Martínez", "Rodríguez", "López", "Hernández", "González", "Pérez", "Sánchez",
         "Smith", "Johnson", "Williams", "Brown", "Jones", "Miller", "Davis", "Garcia"
     ]
     
