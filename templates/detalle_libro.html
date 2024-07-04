@@ -1,50 +1,31 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ libro.title }}</title>
-    <style>
-        .book-detail {
-            text-align: center;
-            margin: 20px;
-        }
-        .book-cover {
-            width: 200px;
-            height: 300px;
-        }
-        .ediciones-lectura {
-            margin-top: 20px;
-        }
-        .edicion {
-            margin: 10px 0;
-        }
-    </style>
-</head>
-<body>
-    <div class="book-detail">
-        <img class="book-cover" src="{{ libro.cover_url }}" alt="{{ libro.title }}">
-        <h1>{{ libro.title }}</h1>
-        <p><strong>Autor(es):</strong> {{ libro.authors.0.name }}</p>
-        <p><strong>Descripción:</strong> {{ libro.description }}</p>
+{% extends "layout.html" %}
+{% load static %}
 
-        {% if ediciones_lectura %}
-            <div class="ediciones-lectura">
-                <h2>Opciones de Lectura:</h2>
-                <ul>
-                    {% for edicion in ediciones_lectura %}
-                        <li class="edicion">
-                            <a href="{{ edicion.url }}" target="_blank">
-                                <img src="{{ edicion.cover_url }}" alt="{{ edicion.title }}" width="100"><br>
-                                {{ edicion.title }}
-                            </a>
-                        </li>
-                    {% endfor %}
-                </ul>
-            </div>
-        {% else %}
-            <p>No hay opciones de lectura disponibles.</p>
-        {% endif %}
-    </div>
-</body>
-</html>
+{% block title %}
+Detalles de libro
+{% endblock %}
+
+{% block main %}
+<main>
+    <section id="book-description">
+        <img src="{{ libro.cover_url }}" alt="{{ libro.title }}" id="libro-photo">
+        <h1>{{ libro.title }}</h1>
+        <h2>{{ libro.authors.0.name }}</h2>
+        <p id="book-summary">{{ libro.description }}</p>
+        <div class="like-dislike">
+            <i class='bx bxs-like' id="like-button"></i> <span class="like-count" id="like-count">0</span>
+            <i class='bx bxs-dislike' id="dislike-button"></i> <span class="dislike-count" id="dislike-count">0</span>
+        </div>
+    </section>
+    <section id="comments-section">
+        <h3>Comentarios</h3>
+        <div id="comments">
+            <!-- Los comentarios se insertarán aquí dinámicamente -->
+        </div>
+        <form id="comment-form">
+            <textarea id="new-comment" placeholder="Escribe tu comentario aquí..." required></textarea>
+            <button type="submit">Enviar</button>
+        </form>
+    </section>
+</main>
+{% endblock %}

@@ -1,0 +1,229 @@
+/* styleinfo.css */
+body {
+    background-image: url('../images/background.jpg');
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Negro con 50% de opacidad */
+    z-index: -1; /* Coloca esta capa detrás del contenido */
+}
+
+
+main {
+    max-width: 800px;
+    margin: 20px auto;
+    margin-top: 70px;
+    padding: 100px;
+    box-shadow: 0 0 10px rgb(255, 254, 254);
+}
+
+h2, h3 {
+    color: #ffffff;
+}
+
+/* Estilos para la sección de descripción del libro */
+#book-description {
+    color: #ffffff;
+    content: color(#ffffff);
+    font-size: 20px;
+    border-bottom: 1px ;
+    padding-bottom: 0em;
+    margin-bottom: 1em;
+}
+
+#libro-photo {
+    margin-top: -5%;
+    width: 250px;
+    height: auto;
+    float: left;
+    margin-right: 10em;
+    margin-bottom: 40px;
+}
+
+#author-bio, #book-summary {
+    margin-bottom: 0em;
+}
+
+/* Estilos para los botones de Me gusta y No me gusta */
+.like-dislike {
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-top: 0px; /* Añadido para separación */
+    padding: 10px;
+}
+
+.like-dislike .bx {
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.like-dislike .like-count,
+.like-dislike .dislike-count {
+    margin-left: 4px;
+    padding: 10px;
+}
+
+.like-dislike .active {
+    color: #7a7a7a;
+    padding: 10px; /* Ajusta el padding para destacar */
+    border-radius: 3px; /* Añade esquinas redondeadas */
+}
+
+/* Estilos para el formulario de comentarios */
+#comment-form {
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 50px;
+}
+
+#new-comment {
+    background-color: transparent;
+    box-shadow: #000000;
+    width: 90%;
+    height: 100px;
+    padding: 0px;
+    border: 1px solid(#7c7c7c00);
+    border-radius: 5px;
+    color: #ffffff;
+    font-size: 16px;
+    resize: vertical; /* Permite que el usuario cambie el tamaño verticalmente */
+}
+
+/* Cambiar el color del placeholder */
+#new-comment::placeholder {
+    color: #ffffff; /* Cambia este valor al color que prefieras */
+    opacity: 5; /* Asegura que el color se aplique correctamente en todos los navegadores */
+}
+
+#new-comment:-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: #ffffff;
+}
+
+#new-comment::-ms-input-placeholder { /* Microsoft Edge */
+    color: #ffffff;
+}
+
+#new-comment:focus {
+    border-color: #000000;
+    box-shadow: 0 0 5px rgb(0, 0, 0);
+    outline: none;
+}
+
+#comment-form button {
+    align-self: flex-start;
+    background-color: #000000;
+    color: #fff;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#comment-form button:hover {
+    background-color: #525252;
+    border: #ffffff;
+}
+
+/* Estilos para la sección de comentarios */
+
+
+#comments {
+    width: 100%; /* Asegura que los comentarios tomen todo el ancho disponible */
+}
+
+.comment {
+    width: 90%; /* Ajusta este valor según tu preferencia */
+    max-width: 800px; /* Asegura que los comentarios no excedan un cierto ancho */
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    background-color: transparent; /* Añade un fondo blanco para los comentarios */
+    color: #ffffff; /* Cambia el color del texto en los comentarios */
+}
+
+.comment-author {
+    font-weight: bold;
+    color: #ffffff; /* Cambia el color del texto del autor del comentario */
+}
+
+.comment-text {
+    margin-top: 5px;
+    color: #ffffff; /* Cambia el color del texto del comentario */
+}
+
+/* Media Queries para pantallas más pequeñas */
+@media (max-width: 768px) {
+    main {
+        margin: 50px;
+        padding: 25px;
+    }
+
+    #book-description {
+        font-size: 20px;
+    }
+
+    #libro-photo {
+        width: 60%;
+        float: none;
+        margin: 0 0 0px 100px;
+    }
+
+    .like-dislike {
+        gap: 5px;
+        margin: 10px;
+    }
+
+    .like-dislike .bx {
+        font-size: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    main {
+        margin: 5px;
+        padding: 10px;
+    }
+
+    #book-description {
+        font-size: 25px;
+    }
+
+    #libro-photo {
+        width: 80%;
+        float: none;
+        margin: 0 0 20px 40px;
+    }
+
+
+    .like-dislike {
+        gap: 3px;
+    }
+
+    #new-comment {
+        height: 150px;
+        font-size: 25px;
+    }
+
+    #comment-form button {
+        padding: 15px 20px;
+    }
+
+    .comment {
+        padding: 15px;
+    }
+}
