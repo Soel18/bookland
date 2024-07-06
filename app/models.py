@@ -28,17 +28,14 @@ class Author(models.Model):
         return self.name
 
 class Book(models.Model):
+    olid = models.CharField(max_length=50, unique=True)  # Campo para el identificador de Open Library
     title = models.CharField(max_length=200)
-    author = models.ForeignKey(Author, on_delete=models.CASCADE)
     description = models.TextField()
-    published_date = models.DateField()
 
     def __str__(self):
         return self.title
 
-    def __str__(self):
-        return self.title
-
+    
 class Comment(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     book = models.ForeignKey(Book, on_delete=models.CASCADE, related_name='comments')
@@ -51,9 +48,9 @@ class Comment(models.Model):
 class Rating(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     book = models.ForeignKey(Book, on_delete=models.CASCADE, related_name='ratings')
-    stars = models.PositiveIntegerField(default=1)
-    review = models.TextField(blank=True, null=True)
+    like = models.BooleanField(default=False)
+    dislike = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f'{self.stars} stars by {self.user.username} for {self.book.title}'
+        return f'Rating by {self.user.username} for {self.book.title}'

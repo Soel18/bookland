@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+{% load static %}
+
+{% block title %}
+Mis Libros
+{% endblock %}
+
+{% block main %}
+
+<main>
+    <h2>Mis libros</h2>
+    <section class="libros">
+        <div class="fila-libros">
+            {% for libro in liked_books %}
+            <div class="libro">
+                <a href="{% url 'detalle_libro' libro.olid %}">
+                    <img src="{% if libro.cover %}{{ libro.cover }}{% else %}{% static 'img/no_cover.jpg' %}{% endif %}" alt="{{ libro.title }}">
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+</main>
+{% endblock %}

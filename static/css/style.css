@@ -240,7 +240,7 @@ nav .nav-bar .logo a {
     width: 300px;
     display: flex;
     align-items: center;
-    background-color: var(--nav-color);
+    background-color: var(--search-bar);
     padding: 3px;
     border-radius: 6px;
     box-shadow: 0 5px 5px rgba(0, 0, 0, 0.1);

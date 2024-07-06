@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from .models import CustomUser
+from .models import CustomUser, Comment, Rating
 
 class RegistrationForm(UserCreationForm):
     class Meta:
@@ -24,3 +24,16 @@ class UserProfileForm(forms.ModelForm):
     class Meta:
         model = CustomUser
         fields = ['biography', 'profile_picture']
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['text'] 
+
+class RatingForm(forms.ModelForm):
+    like = forms.BooleanField(required=False)
+    dislike = forms.BooleanField(required=False)
+    class Meta:
+        model = Rating
+        fields = ['like', 'dislike']
+

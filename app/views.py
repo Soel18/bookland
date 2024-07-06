@@ -1,14 +1,20 @@
 # app/views.py
-from django.shortcuts import redirect, render
-from django.contrib.auth import authenticate, login, logout
+from django.shortcuts import redirect, render, get_object_or_404
+from django.contrib.auth import authenticate, login, logout, get_backends
 from django.contrib import messages
 from django.core.mail import send_mail
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from app.forms import RegistrationForm, UserProfileForm
 import requests
-from django.contrib.auth import get_backends
 import random
+from .models import Book, Comment, Rating, Author
+from django.urls import reverse
+from .forms import CommentForm, RatingForm
+from django.views.decorators.http import require_POST
+from django.http import JsonResponse
+from django.utils import timezone
+from datetime import datetime
 
 # Register view
 def register_view(request):
@@ -144,29 +150,158 @@ def index(request):
 @login_required(login_url='login')
 def detalle_libro(request, olid):
     response = requests.get(f'https://openlibrary.org/works/{olid}.json')
-    response.raise_for_status()
-    libro = response.json()
+    if response.status_code == 200:
+        libro = response.json()
+        cover_url = f'https://covers.openlibrary.org/b/id/{libro.get("covers")[0]}-L.jpg' if libro.get("covers") else 'https://via.placeholder.com/128x193?text=No+Cover'        
+        try:
+            # Intenta obtener el libro por olid desde la base de datos local
+            book = Book.objects.get(olid=olid)
+        except Book.DoesNotExist:
+            book = Book.objects.create(
+                olid=olid,
+                title=libro.get('title', 'Título no disponible'),
+                description=libro.get('description', 'Descripción no disponible')
+            )
+            book.save()
 
-    libro['cover_url'] = f'https://covers.openlibrary.org/b/id/{libro.get("covers")[0]}-L.jpg' if libro.get("covers") else 'https://via.placeholder.com/128x193?text=No+Cover'
+            ediciones_response = requests.get(f'https://openlibrary.org/works/{olid}/editions.json')
+            ediciones_response.raise_for_status()
+            ediciones = ediciones_response.json().get('entries', [])
 
-    # Obtiene ediciones del libro
-    ediciones_response = requests.get(f'https://openlibrary.org/works/{olid}/editions.json')
-    ediciones_response.raise_for_status()  # Asegura que la solicitud fue exitosa
-    ediciones = ediciones_response.json().get('entries', [])
+            ediciones_lectura = []
+            for edicion in ediciones:
+                availability = edicion.get('availability', {})
+                read_url = availability.get('read', None)
+                if read_url:
+                    ediciones_lectura.append({
+                        'title': edicion.get('title', 'Título no disponible'),
+                        'url': read_url,
+                        'cover_url': f'https://covers.openlibrary.org/b/id/{edicion.get("covers")[0]}-M.jpg' if edicion.get("covers") else 'https://via.placeholder.com/128x193?text=No+Cover'
+                    })
 
-    # Filtra las ediciones que tienen opciones de lectura
-    ediciones_lectura = []
-    for edicion in ediciones:
-        availability = edicion.get('availability', {})
-        read_url = availability.get('read', None)
-        if read_url:
-            ediciones_lectura.append({
-                'title': edicion.get('title', 'Título no disponible'),
-                'url': read_url,
-                'cover_url': f'https://covers.openlibrary.org/b/id/{edicion.get("covers")[0]}-M.jpg' if edicion.get("covers") else 'https://via.placeholder.com/128x193?text=No+Cover'
-            })
+        # Si se encuentra el libro localmente, procede con el resto de la lógica
+        comments = Comment.objects.filter(book=book)
+        user_rating = Rating.objects.filter(user=request.user, book=book).first()
+        like_count = Rating.objects.filter(book=book, like=True).count()
+        dislike_count = Rating.objects.filter(book=book, dislike=True).count()
 
-    return render(request, 'detalle_libro.html', {'libro': libro, 'ediciones_lectura': ediciones_lectura})
+        if request.method == 'POST':
+            form = CommentForm(request.POST)
+            if form.is_valid():
+                new_comment = form.save(commit=False)
+                new_comment.user = request.user
+                new_comment.book = book  # Asocia el comentario con el libro obtenido o creado
+                new_comment.save()
+                return redirect('detalle_libro', olid=olid)  # Redirige al detalle del libro después de agregar el comentario
+        else:
+            form = CommentForm()
+        
+        context = {
+            'libro': book,
+            'ediciones_lectura': [],  # Aquí podrías ajustar según necesites mostrar ediciones si se encuentra en la base de datos
+            'olid': olid,
+            'comments': comments,
+            'user_rating': user_rating,
+            'like_count': like_count,
+            'dislike_count': dislike_count,
+            'cover_url': cover_url,
+        }
+
+        return render(request, 'detalle_libro.html', context)
+    else:
+        return redirect('index')
+
+
+@login_required(login_url='login')
+@require_POST
+def add_comment(request, olid):
+    book, created = Book.objects.get_or_create(olid=olid)
+
+    if created:
+        response = requests.get(f'https://openlibrary.org/works/{olid}.json')
+        response.raise_for_status()
+        libro_data = response.json()
+        book.title = libro_data.get('title', 'Título no disponible')
+        book.description = libro_data.get('description', 'Descripción no disponible')
+        book.save()
+
+    # Procesar el formulario de comentario
+    form = CommentForm(request.POST)
+    if form.is_valid():
+        new_comment = form.save(commit=False)
+        new_comment.user = request.user
+        new_comment.book = book
+        new_comment.save()
+
+        return JsonResponse({
+            'user': {
+                'username': new_comment.user.username,
+            },
+            'text': new_comment.text,
+            'created_at': new_comment.created_at.strftime('%Y-%m-%d %H:%M:%S'),
+        })
+    else:
+        return JsonResponse({'error': 'Formulario inválido.'}, status=400)
+
+@login_required(login_url='login')
+@require_POST
+def update_rating(request, olid):
+    book = get_object_or_404(Book, olid=olid)
+    user = request.user
+
+    like = request.POST.get('like') == 'true'
+    dislike = request.POST.get('dislike') == 'true'
+
+    try:
+        rating = Rating.objects.get(user=user, book=book)
+    except Rating.DoesNotExist:
+        rating = None
+
+    if like:
+        if rating:
+            rating.like = True
+            rating.dislike = False
+        else:
+            rating = Rating.objects.create(user=user, book=book, like=True)
+    elif dislike:
+        if rating:
+            rating.like = False  # Cambia el valor de 'like' a False si ya existe un rating
+            rating.dislike = True
+        else:
+            rating = Rating.objects.create(user=user, book=book, dislike=True)
+    
+    if rating:
+        rating.save()
+
+    # Recuento de likes y dislikes
+    like_count = Rating.objects.filter(book=book, like=True).count()
+    dislike_count = Rating.objects.filter(book=book, dislike=True).count()
+
+    return JsonResponse({
+        'like_count': like_count,
+        'dislike_count': dislike_count,
+        'like': rating.like if rating else False,
+        'dislike': rating.dislike if rating else False
+    })
+
+
+@login_required(login_url='login')
+def mis_libros(request):
+    # Obtén los libros que el usuario ha dado like
+    liked_books = Book.objects.filter(ratings__user=request.user, ratings__like=True).distinct()
+
+    # Obtén la portada de Open Library para cada libro
+    for libro in liked_books:
+        response = requests.get(f'https://openlibrary.org/works/{libro.olid}.json')
+        response.raise_for_status()
+        libro.cover = f'https://covers.openlibrary.org/b/id/{response.json().get("covers")[0]}-L.jpg' if response.json().get("covers") else None
+
+    context = {
+        'liked_books': liked_books,
+    }
+    return render(request, 'mis_libros.html', context)
+
+
 
 @login_required(login_url='login')
 def geners(request):

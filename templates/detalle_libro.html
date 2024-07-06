@@ -4,29 +4,195 @@
 {% block title %}
 Detalles de libro
 {% endblock %}
-<link rel="stylesheet" href="{% static 'css/styles_libro.css' %}">  
 
 {% block main %}
+<link rel="stylesheet" href="{% static 'css/styles_libro.css' %}">
+
 <main>
     <section id="book-description">
-        <img src="{{ libro.cover_url }}" alt="{{ libro.title }}" id="libro-photo">
+        <img src="{{ cover_url }}" alt="{{ libro.title }}" id="libro-photo">
         <h1>{{ libro.title }}</h1>
-        <h2>{{ libro.authors.0.name }}</h2>
         <p id="book-summary">{{ libro.description }}</p>
         <div class="like-dislike">
-            <i class='bx bxs-like' id="like-button"></i> <span class="like-count" id="like-count">0</span>
-            <i class='bx bxs-dislike' id="dislike-button"></i> <span class="dislike-count" id="dislike-count">0</span>
+            <i class="bx bxs-like {% if user_rating and user_rating.like %}active{% endif %}" id="like-button"></i>
+            <span class="like-count" id="like-count">{{ like_count }}</span>
+            <i class="bx bxs-dislike {% if user_rating and user_rating.dislike %}active{% endif %}" id="dislike-button"></i>
+            <span class="dislike-count" id="dislike-count">{{ dislike_count }}</span>
         </div>
     </section>
+    <hr>
+    <h3>Ediciones Disponibles</h3>
+    <ul>
+        {% for edicion in ediciones_lectura %}
+            <li>
+                <a href="{{ edicion.url }}">{{ edicion.title }}</a>
+                {% if edicion.cover_url %}
+                    <img src="{{ edicion.cover_url }}" alt="Portada de la edición">
+                {% endif %}
+            </li>
+        {% empty %}
+            <li>No hay ediciones disponibles para leer.</li>
+        {% endfor %}
+    </ul>
+    <hr>
     <section id="comments-section">
         <h3>Comentarios</h3>
         <div id="comments">
-            <!-- Los comentarios se insertarán aquí dinámicamente -->
+            {% for comment in comments %}
+            <div class="comment">
+                <p><strong>{{ comment.user.username }}</strong>: {{ comment.text }}</p>
+                <p class="comment-time">{{ comment.created_at }}</p>
+            </div>
+            {% endfor %}
         </div>
-        <form id="comment-form">
-            <textarea id="new-comment" placeholder="Escribe tu comentario aquí..." required></textarea>
+        <form id="comment-form" action="{% url 'add_comment' olid=olid %}" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <textarea id="new-comment" name="text" placeholder="Escribe tu comentario aquí..." required></textarea>
             <button type="submit">Enviar</button>
+        </form>
+
+        <form id="rating-form" action="{% url 'update_rating' olid=olid %}" method="post" style="display: none;">
+            {% csrf_token %}
+            <input type="hidden" name="like" id="like-input">
+            <input type="hidden" name="dislike" id="dislike-input">
         </form>
     </section>
 </main>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const likeButton = document.getElementById('like-button');
+    const dislikeButton = document.getElementById('dislike-button');
+    const likeCount = document.getElementById('like-count');
+    const dislikeCount = document.getElementById('dislike-count');
+    const commentForm = document.getElementById('comment-form');
+    const newComment = document.getElementById('new-comment');
+    const ratingForm = document.getElementById('rating-form');
+    const likeInput = document.getElementById('like-input');
+    const dislikeInput = document.getElementById('dislike-input');
+    const commentsSection = document.getElementById('comments');
+
+    if (!likeButton || !dislikeButton || !likeCount || !dislikeCount || !commentForm || !newComment || !ratingForm || !likeInput || !dislikeInput || !commentsSection) {
+        console.error('Error: No se pudieron encontrar uno o más elementos necesarios.');
+        return;
+    }
+
+    likeButton.addEventListener('click', async () => {
+        const isActive = likeButton.classList.contains('active');
+        likeInput.value = !isActive;
+        dislikeInput.value = false;
+
+        try {
+            const response = await updateRating();
+            if (response.ok) {
+                const data = await response.json();
+                updateUI(data);
+                if (isActive) {
+                    likeButton.classList.remove('active');
+                } else {
+                    likeButton.classList.add('active');
+                    dislikeButton.classList.remove('active');
+                }
+            } else {
+                throw new Error('Error al actualizar el rating.');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    });
+
+    dislikeButton.addEventListener('click', async () => {
+        const isActive = dislikeButton.classList.contains('active');
+        likeInput.value = false;
+        dislikeInput.value = !isActive;
+
+        try {
+            const response = await updateRating();
+            if (response.ok) {
+                const data = await response.json();
+                updateUI(data);
+                if (isActive) {
+                    dislikeButton.classList.remove('active');
+                } else {
+                    dislikeButton.classList.add('active');
+                    likeButton.classList.remove('active');
+                }
+            } else {
+                throw new Error('Error al actualizar el rating.');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    });
+
+    commentForm.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const commentText = newComment.value.trim();
+        if (commentText) {
+            try {
+                const response = await fetch(commentForm.action, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                        'X-CSRFToken': getCookie('csrftoken'),
+                    },
+                    body: new URLSearchParams(new FormData(commentForm)),
+                });
+
+                if (!response.ok) {
+                    throw new Error('Error al enviar el comentario.');
+                }
+
+                const comment = await response.json();
+
+                // Crear un nuevo elemento de comentario y agregarlo a la lista de comentarios
+                const commentElement = document.createElement('div');
+                commentElement.className = 'comment';
+                commentElement.innerHTML = `
+                    <p><strong>${comment.user.username}</strong>: ${comment.text}</p>
+                    <p class="comment-time">${comment.created_at}</p>
+                `;
+                commentsSection.appendChild(commentElement);
+                newComment.value = '';
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+    });
+
+    function updateRating() {
+        const formData = new URLSearchParams(new FormData(ratingForm));
+        return fetch(ratingForm.action, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'X-CSRFToken': getCookie('csrftoken'),
+            },
+            body: formData,
+        });
+    }
+
+    function updateUI(data) {
+        likeCount.textContent = data.like_count;
+        dislikeCount.textContent = data.dislike_count;
+    }
+
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.startsWith(name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+});
+
+</script>
 {% endblock %}

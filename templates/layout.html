@@ -23,7 +23,7 @@
                 </div>
                 <ul class="nav-links">
                     <li><a href="{% url 'index' %}">Inicio</a></li>
-                    <li><a href="#">Mis libros</a></li>
+                    <li><a href="{% url 'mis_libros' %}">Mis libros</a></li>
                     <li><a href="{% url 'geners' %}">Generos</a></li>
                     <li><a href="{% url 'writers' %}">Escritores</a></li>
                     <li><a href="{% url 'logout' %}">Cerrar sesión</a></li>
@@ -42,11 +42,13 @@
                     <div class="search-field">
                         <form method="GET" action="">
                             <input type="text" name="q" placeholder="Buscar..." value="{{ request.GET.q|default:'' }}">
-                            <button type="submit"><i class='bx bx-search'></i></button>
+                            <i class='bx bx-search'></i>
                         </form>
                     </div>
                     <div class="logo-user">
-                        <i class='bx bx-user-circle'></i>
+                        <a href="{% url 'foto' %}">
+                            <i class='bx bx-user-circle'></i>                            
+                        </a>
                     </div>
                 </div>
             </div>
@@ -57,7 +59,6 @@
     {% endblock %}
     <script src="{% static 'js/script.js' %}"></script>
     <script src="{% static 'js/carrusel.js' %}"></script>
-    <script src="{% static 'js/libro.js' %}"></script>
 </body>
 
 </html>
