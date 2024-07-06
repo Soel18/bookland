@@ -36,7 +36,7 @@ SECRET_KEY = env('SECRET_KEY')
 DEBUG = env('DEBUG')
 AUTH_USER_MODEL = 'app.CustomUser'
 SESSION_ENGINE = "django.contrib.sessions.backends.db"
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['']
 
 
 # Configuración para enviar correos electrónicos
@@ -46,10 +46,6 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = config('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
-# settings.py
-
-# Incluye el dominio de Railway en las configuraciones de CSRF_TRUSTED_ORIGINS
-CSRF_TRUSTED_ORIGINS = ['https://bookland-production.up.railway.app']
 
 # Application definition
 
@@ -63,6 +59,9 @@ INSTALLED_APPS = [
     'app',
     'social_django',
 ]
+
+CSRF_TRUSTED_ORIGINS = ['https://bookland-production.up.railway.app']
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
