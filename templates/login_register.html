@@ -15,6 +15,7 @@
             <div class="inner-box">
                 <div class="forms-wrap">
                     <form action="{% url 'login' %}" autocomplete="off" class="sign-in-form" method="post">
+                        {% csrf_token %}                        
                         <div class="logo">
                             <img src="{% static 'images/logo.png' %}" alt="easyclass" />
                             <h4>BookLand</h4>
@@ -54,6 +55,7 @@
                     </form>
 
                     <form action="{% url 'register' %}" autocomplete="off" class="sign-up-form" method="post">
+                        {% csrf_token %}
                         <div class="logo">
                             <img src="{% static 'images/logo.png' %}" alt="easyclass" />
                             <h4>BookLand</h4>
