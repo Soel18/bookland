@@ -60,7 +60,7 @@ INSTALLED_APPS = [
     'social_django',
 ]
 
-CSRF_TRUSTED_ORIGINS = ['https://bookland-production.up.railway.app']
+CSRF_TRUSTED_ORIGINS = ['bookland-production-b27c.up.railway.app']
 
 
 MIDDLEWARE = [
