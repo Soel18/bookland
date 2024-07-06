@@ -36,7 +36,7 @@ SECRET_KEY = env('SECRET_KEY')
 DEBUG = env('DEBUG')
 AUTH_USER_MODEL = 'app.CustomUser'
 SESSION_ENGINE = "django.contrib.sessions.backends.db"
-ALLOWED_HOSTS = ['']
+ALLOWED_HOSTS = ['*']
 
 
 # Configuración para enviar correos electrónicos
