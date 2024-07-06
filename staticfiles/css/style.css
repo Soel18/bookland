@@ -32,7 +32,17 @@ body.dark {
     --side-nav: #242526;
     --text-color: #CCC;
     --search-bar: #242526;
+} 
+
+body.light {
+    --body-color: #fff;
+    /*--nav-color: url('../images/head-light.jpg'); /* Usar una imagen de fondo diferente para el modo claro si es necesario */
+    --side-nav: #913831;
+    --text-color: #FFF;
+    --search-bar: #F2F2F2;
+    --search-text: #010718;
 }
+
 
 nav {
     position: fixed;
@@ -71,7 +81,7 @@ nav .nav-bar .sidebarOpen {
 
 nav .nav-bar .logo a {
     font-size: 25px;
-    font-weight: 500;
+    font-weight: 1000;
     color: var(--text-color);
     text-decoration: none;
 }
@@ -144,7 +154,7 @@ nav .nav-bar .logo a {
 
 .darkLight-searchBox .searchToggle{
     height: 10px;
-    width: 100px;
+    width: 120px;
     display: flex;
     position: absolute, relative;
     align-items: center;
@@ -154,7 +164,7 @@ nav .nav-bar .logo a {
 
 .logo-user i{
     height: 10px;
-    width: 70px;
+    width: 80px;
     bottom: 20px;
     display: flex;
     position: absolute, relative;
@@ -166,9 +176,9 @@ nav .nav-bar .logo a {
 }
 
 .dark-light i{
-    width: 30px;
+    width: 200px;
     display: flex;
-    bottom: 20px;
+    bottom: 50px;
     position: absolute, relative;
     color: var(--text-color);
     font-size: 22px;
@@ -178,7 +188,7 @@ nav .nav-bar .logo a {
 
 .searchToggle i{ 
     height: 1px;
-    width: 1px;
+    width: 20px;
     display: flex;
     position: absolute;
     color: var(--text-color);
@@ -230,7 +240,7 @@ nav .nav-bar .logo a {
     width: 300px;
     display: flex;
     align-items: center;
-    background-color: var(--nav-color);
+    background-color: var(--search-bar);
     padding: 3px;
     border-radius: 6px;
     box-shadow: 0 5px 5px rgba(0, 0, 0, 0.1);
@@ -348,14 +358,20 @@ body.dark .search-field i{
 /* ===== Carrusel ===== */
 /* Estilos generales */
 /* Estilos para el carrusel */
+.html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+}
+
 .carrusel {
     position: relative;
     overflow: hidden;
     width: 100%;
-    height: 300px;
-    margin-top: 80px; /* Ajusta según la altura del navbar */
+    height: 100vh; /* Altura completa de la pantalla */
+    margin-top: 0; /* Ajusta según la altura del navbar, si es necesario */
 }
-
 .carrusel-item {
     position: absolute;
     top: 0;
@@ -364,31 +380,30 @@ body.dark .search-field i{
     height: 100%;
     display: flex;
     align-items: center;
-    transition: left 0.5s ease-in-out;
-    opacity: 0;
-    transition: opacity 0.5s ease-in-out;
+    justify-content: center; /* Centrar el contenido horizontalmente */
+    transition: left 0.5s ease-in-out, opacity 0.5s ease-in-out;
+    opacity: 0.2; /* Opacidad inicial de los items no activos */
 }
 
 .carrusel-item.active {
     left: 0;
     opacity: 1;
-} 
+}
 
-.imagen-fondo img {
+.imagen-fondo {
     position: absolute;
     width: 100%;
     height: 100%;
     top: 0;
     left: 0;
-    overflow: hidden;
 }
 
 .imagen-fondo img {
-    position: absolute;
+    box-shadow: #010718;
     width: 100%;
     height: 100%;
     object-fit: cover;
-    opacity: 0.3; /* Opacidad de la imagen de fondo */
+    opacity: 0.70; /* Opacidad de la imagen de fondo */
 }
 
 .contenido-libro {
@@ -396,22 +411,25 @@ body.dark .search-field i{
     z-index: 1;
     display: flex;
     align-items: center;
-    justify-content: flex-start;
-    padding-left: 35%;
+    justify-content: center; /* Centrar el contenido horizontalmente */
+    flex-direction: column; /* Cambia a columna para centrar verticalmente en pantallas pequeñas */
+    text-align: center; /* Centrar el texto */
+    padding: 30px; /* Ajuste según tus necesidades */
+    color: white; /* Asegúrate de que el texto sea legible */
+    width: 50000px;
+    height: 80000px;
 }
 
 .portada-libro img { 
-    margin-right: 20px;
-    width: 150px;
-    height: 250px;
+    margin-bottom: 10px;
+    width: 300px;
+    height: 450px;
     object-fit: cover;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     border-radius: 5px;
 }
 
 .descripcion-libro {
-    margin-left: 20px;
-    max-width: 60%;
     color: #FFF;
 }
 
@@ -427,18 +445,13 @@ body.dark .search-field i{
 /* Responsivo para tablets y pantallas pequeñas */
 @media (max-width: 768px) {
     .contenido-libro {
-        flex-direction: column;
-        align-items: center;
-        justify-content: center; /* Sigue centrado horizontalmente */
         padding-left: 0;
-        text-align: center;
-        padding: 0 80px; /* Opcional, ajusta según el espacio que desees */
     }
 
     .portada-libro img {
-        margin: 0 auto 10px; /* Centramos la imagen y damos espacio inferior */
-        width: 120px;
-        height: 160px;
+        margin: 0 auto 10px;
+        width: 220px;
+        height: 360px;
     }
 
     .descripcion-libro {
@@ -447,20 +460,14 @@ body.dark .search-field i{
     }
 }
 
-
 /* Responsivo para móviles */
 @media (max-width: 480px) {
     .carrusel { 
-        height: 500px; /* Ajuste de la altura del carrusel */
+        height:100vh;
     } 
 
     .contenido-libro {
-        flex-direction: column;
-        align-items: center;
-        justify-content: center; /* Sigue centrado horizontalmente */
         padding-left: 0;
-        text-align: center;
-        padding: 0 80px; /* Opcional, ajusta según el espacio que desees */
     }
 
     .portada-libro img {   
@@ -475,14 +482,22 @@ body.dark .search-field i{
     } 
 
     .descripcion-libro p {
-        font-size: 12px; /* Tamaño de fuente más pequeño */
+        font-size: 12px;
+    }
+
+    .carrusel-dots {
+        position: relative;
+        bottom: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
     }
 }
 
 /* Ajuste de los puntos de navegación del carrusel */
 .carrusel-dots {
     position: absolute;
-    bottom: 300px;
+    bottom: -20px;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
@@ -501,6 +516,65 @@ body.dark .search-field i{
 
 .carrusel-dots button.active {
     background: #333;
+}
+
+/* Modo claro para el carrusel */ 
+:root {
+    --body-color: #ffffff;
+    --nav-color: url('../images/head.jpg');
+    --nav-shadown: #8fc7ce;
+    --side-nav: #913831;
+    --text-color: #FFF;  
+    --search-bar: #F2F2F2;
+    --search-text: #010718;
+    /*--carrusel-bg-light: url('../images/carrusel-light.jpg'); /* Imagen para modo claro */
+    /*--carrusel-bg-dark: url('../images/carrusel-dark.jpg');   /* Imagen para modo oscuro */
+}
+
+body.dark {
+    --body-color: #18191A;
+    --nav-color: url('../images/head.jpg');
+    --side-nav: #242526;
+    --text-color: #CCC;
+    --search-bar: #242526;
+    /*--carrusel-bg-light: url('../images/carrusel-dark.jpg');*/
+}
+
+.carrusel {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    height: 100vh; /* Altura completa de la pantalla */
+    margin-top: 0; /* Ajusta según la altura del navbar, si es necesario */
+    /*background-image: var(--carrusel-bg-light); /* Utiliza la variable para la imagen de fondo */
+    background-size: cover;
+    background-position: center;
+}
+
+/*body.dark .carrusel {
+    background-image: var(--carrusel-bg-dark); Cambia la imagen en modo oscuro
+}
+
+body.lihtg .carrusel {
+    background-image: var(--carrusel-bg-light); Cambia la imagen en modo oscuro
+}
+*/
+.carrusel-item {
+    position: absolute;
+    top: 0;
+    left: 100%;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Centrar el contenido horizontalmente */
+    transition: left 0.5s ease-in-out, opacity 0.5s ease-in-out;
+    opacity: 0.2; /* Opacidad inicial de los items no activos */
+}
+
+.carrusel-item.active {
+    left: 0;
+    opacity: 1;
 }
 
 /* libros segun los gustos */ 
@@ -530,7 +604,7 @@ body.dark .search-field i{
 }
 
 .libros {
-    max-width: 1200px;
+    max-width: 3200px;
     margin: -100px auto;
     padding: 10px;
 }
@@ -549,6 +623,8 @@ body.dark .search-field i{
 }
 
 .libro img {
+    justify-content: center;
+    margin-right: 50px;
     width: 100%;
     height: auto;
     border-radius: 5px;
@@ -589,5 +665,377 @@ body.dark .search-field i{
     .libro {
         width: 100%; /* Muestra 1 libro por fila */
     }
+}  
+
+/* css de mostrar libros */
+.book-list {
+    padding: 100px;
+    background-color: #f5f5f5;
+}
+
+.book-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center; /* Center the books */
+}
+
+.book {
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    overflow: hidden;
+    width: calc(100% - 40px); /* Default to full width */
+    max-width: 100px; /* Limit max width */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+}
+
+.book:hover {
+    transform: translateY(-5px);
+} 
+
+.fila-libros {
+    display: flex; 
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin-bottom: 10px;
+} 
+
+.libros {
+    max-width: 1200px;
+    margin: 100px auto;
+    padding: 80px;
+}
+
+.book-cover {
+    width: 20%;
+    height: 10px;
+    object-fit: cover;
+}
+
+.book-info {
+    padding: 25px;
+}
+
+.book-info h3 {
+    margin: 0 0 10px;
+    font-size: 1.5em;
+    color: #333;
+}
+
+.book-info .author {
+    font-weight: bold;
+    color: #555;
+}
+
+.book-info .description {
+    color: #777;
+}
+
+.h2 {
+    display: block;
+    font-size: 1.5em;
+    margin-block-start: 0.83em;
+    margin-block-end: 0.83em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+    unicode-bidi: isolate;
+}
+
+/* Media queries for responsive design */
+@media (min-width: 600px) {
+    .book {
+        width: calc(50% - 20px); /* Two columns for medium screens */
+    }
+}
+
+@media (min-width: 900px) {
+    .book {
+        width: calc(33.333% - 20px); /* Three columns for large screens */
+    }
+}
+
+/* generos de libro css */
+.container {
+    padding: 30px;
+    max-width: 10000px;
+    margin-top: 20px;
+}
+
+.genre-section {
+    margin-bottom: 50px;
+}
+
+.genre-section h2 {
+    color: #ccc;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 5px;
+    margin-bottom: 20px;
+}
+
+.book-list {
+    background: transparent;
+    display: flex;
+    gap: 20px; /* Espacio entre los elementos del carrusel */
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    padding: 0 10px; /* Añade un padding lateral para evitar que las imágenes se peguen al borde */
+}
+
+.book-list::-webkit-scrollbar {
+    display: none; /* Oculta la barra de desplazamiento en navegadores basados en WebKit */
+}
+
+.book-item {
+    flex: 0 0 auto; 
+    padding: 5px; /* Relleno interno, opcional */
+    display: flex;
+    justify-content: center;
+}
+
+.book-item img {
+    width: 50%; /* La imagen ocupa todo el ancho del contenedor */
+    margin-left: 50px;
+    margin-bottom: 50px;
+    height: auto; /* Mantener proporción */
+    border: 60px ;
+    border-radius: 4px;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2), 0 6px 20px rgba(0, 0, 0, 0.19); /* Sombra mejorada */
+}
+
+.book-item p {
+    text-align: center;
+    margin-top: 10px;
+    font-size: 14px;
+    color: #FFF;
+} 
+
+/* Estilos generales del carrusel de generos de libro*/
+.carousel {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    margin-top: 30px; /* Ajusta según la altura del navbar */
+}
+
+.book-list {
+    display: flex;
+    gap: 50px; /* Añade un espacio entre los elementos del carrusel */
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    padding: 50px; /* Añade un padding lateral para evitar que las imágenes se peguen al borde */
+}
+
+.book-item {
+    flex: 0 0 auto;
+    margin: 10;
+    padding: 10;
+    margin-right: 100px; /* Ajusta el espacio lateral entre los elementos */
+    display: flex;
+    justify-content: center;
+}
+
+
+.book-item img {
+    margin-left: -20px;
+    width: 200px;
+    height: 300px;
+    border-radius: 4px;
+    box-shadow: 0 50px 50px rgba(0, 0, 0, 0.2), 0 6px 20px rgba(0, 0, 0, 0.19); /* Sombra mejorada */
+}
+
+.carousel-button {
+    background-color: rgba(36, 24, 24, 0.5);
+    color: white;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    position: absolute;
+    top: 40%;
+    transform: translateY(-50%);
+    z-index: 50;
+}
+
+.carousel-button.prev {
+    left: 10px;
+}
+
+.carousel-button.next {
+    right: 10px;
+}
+
+/* Responsivo para tablets y pantallas pequeñas */
+@media (max-width: 768px) {
+    .book-list {
+        gap: 15px;
+    }
+
+    .book-item {
+        flex: 0 0 45%;
+    }
+
+    .carousel-button {
+        padding: 8px;
+    }
+}
+
+/* Responsivo para móviles */
+@media (max-width: 480px) {
+    .book-list {
+        gap: 10px;
+    }
+
+    .book-item {
+        flex: 0 0 70%;
+    }
+
+    .carousel-button {
+        padding: 6px;
+    }
+}
+
+/* Escritores css */
+body {
+    font-family: Arial, sans-serif;
+    margin-top: 50px;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.writers-section {
+    padding: 20px;
+    background-color: transparent;
+}
+
+.writers-list {
+    display: flex;
+    flex-direction: column;
+    gap: 30px; /* Aumenta el espacio entre las tarjetas */
+}
+
+.writer-card {
+    display: flex;
+    align-items: center;
+    padding: 30px; /* Aumenta el padding */
+    background: linear-gradient(#ffffff, #7a5b17) ;
+    border: 1px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    max-width: 1200px; /* Aumenta el ancho máximo */
+    margin: 0 auto; /* Centra la tarjeta */
+}
+
+.writer-card img {
+    width: 200px; /* Aumenta el tamaño de la imagen */
+    height: 200px; /* Aumenta el tamaño de la imagen */
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 30px; /* Aumenta el margen */
+}
+
+.writer-card.left img {
+    order: 0;
+}
+
+.writer-card.left .writer-info {
+    order: 1;
+}
+
+.writer-card.right {
+    flex-direction: row-reverse;
+}
+
+.writer-card.right img {
+    margin-left: 30px; /* Aumenta el margen */
+    margin-right: 0;
+}
+
+.writer-info {
+    flex: 1; /* Hace que la información del escritor ocupe todo el espacio disponible */
+}
+
+.writer-info h3 {
+    margin-top: 0;
+    font-size: 24px; /* Aumenta el tamaño de la fuente */
+}
+
+.writer-info p {
+    font-size: 16px; /* Ajusta el tamaño de la fuente */
+    line-height: 1.5; /* Mejora la legibilidad */
+    margin-bottom: 20px; /* Añade espacio debajo del párrafo */
+}
+
+.writer-info .bx {
+    font-size: 24px; /* Ajusta el tamaño de los íconos */
+    cursor: pointer;
+    margin-right: 10px; /* Espacio entre los íconos */
+}
+
+.writer-info .bxs-like {
+    color: black; /* Color para el ícono de like */
+}
+
+.writer-info .bxs-dislike {
+    color: black; /* Color para el ícono de dislike */
+}
+
+/* Media queries para pantallas más pequeñas */
+
+@media (max-width: 768px) {
+    .writer-card {
+        flex-direction: column;
+        align-items: flex-start;
+        text-align: left;
+    }
+
+    .writer-card img {
+        width: 150px;
+        height: 150px;
+        margin-right: 0;
+        margin-bottom: 20px;
+    }
+
+    .writer-card.right {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .writer-card.right img {
+        margin-left: 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .writer-card {
+        padding: 20px;
+    }
+
+    .writer-info h3 {
+        font-size: 20px;
+    }
+
+    .writer-info p {
+        font-size: 14px;
+    }
+
+    .writer-info .bx {
+        font-size: 20px; /* Ajusta el tamaño de los íconos */
+    }
+}
+
+.like-dislike {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.like-dislike .bx {
+    cursor: pointer;
+}
+
+.like-dislike .active {
+    color: #ffffff; /* Color cuando está activo */
 }
 

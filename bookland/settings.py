@@ -35,9 +35,9 @@ SECRET_KEY = env('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env('DEBUG')
 AUTH_USER_MODEL = 'app.CustomUser'
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 SESSION_ENGINE = "django.contrib.sessions.backends.db"
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
+
 
 # Configuración para enviar correos electrónicos
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -153,16 +153,26 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')"""
 
-STATIC_URL = '/static/'
-MEDIA_URL = '/media/'
+# Default primary key field type
+# https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# Configuración para archivos multimedia
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# Configuración para archivos estáticos
+STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
-MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images/')
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Configuración adicional para imágenes de perfil
 PROFILE_PICS_DIR = 'profile_pics/'  # Ruta relativa a MEDIA_ROOT
 PROFILE_PICS_ROOT = os.path.join(MEDIA_ROOT, PROFILE_PICS_DIR)
 PROFILE_PICS_URL = os.path.join(MEDIA_URL, PROFILE_PICS_DIR)
+
+
+
 
 
 #social app costum settings
