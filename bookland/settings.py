@@ -60,7 +60,7 @@ INSTALLED_APPS = [
     'social_django',
 ]
 
-CSRF_TRUSTED_ORIGINS = ['https://bookland-production-b27c.up.railway.app']
+CSRF_TRUSTED_ORIGINS = ['https://bookland-production.up.railway.app']
 
 
 MIDDLEWARE = [
@@ -71,7 +71,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'social_django.middleware.SocialAuthExceptionMiddleware',
+    'social_django.middleware.SocialAuthExceptionMiddleware',    
 ]
 
 ROOT_URLCONF = 'bookland.urls'
