@@ -9,7 +9,7 @@ Para comenzar, sigue estos pasos:
 
 2. Clonar el repositorio:
 ```bash
-git clone https://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@github.com/Soel18/bookland.git
+git clone https://github.com/Soel18/bookland.git
 ```
 
 3. Crear el entorno virtual y activarlo
